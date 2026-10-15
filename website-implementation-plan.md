@@ -1,6 +1,6 @@
 # Collie Writer website implementation plan
 
-Prepared October 15, 2026. **WEB01–WEB02 implementation complete — awaiting user testing. WEB03–WEB08 are not started.**
+Prepared October 15, 2026. **WEB01–WEB03 implementation complete — awaiting user testing. WEB04–WEB08 are not started.**
 
 This plan turns the supplied creative brief into eight independently requestable stages. “Implement stage WEB01” authorizes that stage's local website work and required code checks. Stop at its handoff for Josh's observations. It does not authorize the next stage, changes to the desktop repository, service deployment, publication, or live commerce.
 
@@ -448,7 +448,7 @@ Update this table at every requested stage boundary. “Not applicable” for pu
 | ----- | ---------------------------------- | ------------------------------------- | ------------------------------------ | ------------------------------ |
 | WEB01 | Foundation and first impression    | Complete; format/lint/typecheck clean | Awaiting user testing                | Not authorized                 |
 | WEB02 | Product story                      | Complete; format/lint/typecheck clean | Awaiting user testing                | Not authorized                 |
-| WEB03 | Motion and interaction             | Not started                           | Not requested                        | Not authorized                 |
+| WEB03 | Motion and interaction             | Complete; format/lint/typecheck clean | Awaiting user testing                | Not authorized                 |
 | WEB04 | Access and downloads               | Not started; no approved artifacts    | Not requested                        | Downloads unavailable          |
 | WEB05 | Help, trust and discoverability    | Not started; owner inputs pending     | Not requested                        | Content not approved/published |
 | WEB06 | Purchase in app journey            | Not started; COM01/APP01 pending      | No commerce results supplied         | Checkout disabled              |
@@ -515,6 +515,26 @@ Update this table at every requested stage boundary. “Not applicable” for pu
 5. Use keyboard navigation and, if available, screen-reader heading navigation. Expect a sensible reading order, visible focus on real links and no focus stops on illustrated material or editor controls.
 
 **User results:** not supplied. Visual layout, small-screen readability, zoom, anchor/focus behavior and assistive-technology behavior await user testing. WEB03–WEB08 remain unstarted. No publication, desktop release, AI access or commerce acceptance is implied.
+
+### WEB03 — October 15, 2026 — implementation complete — awaiting user testing
+
+**Plan review:** reviewed all eight stages, design/content boundaries, dependency order and existing acceptance records. No WEB03 blocker was found. The website Git tree was clean at the start. WEB01–WEB02 user results remain unsupplied; this request authorizes motion work without implying earlier acceptance. No external assets/services or desktop changes are needed.
+
+**Implemented:** `ProductStory.tsx` attaches the feature-owned `use-shape-motion.ts` hook to the Shape board. `ProductStory.module.css` adds decorative paper edges and a finite paper → connection → selected-chapter accent sequence (longest animation 880ms). Paper movement is limited to an 8px/6px offset and one-degree settling rotation; the connection arrow travels 6px and the chapter border settles from a shallow scale. Copy, cards, manuscript and controls remain stationary and visible. Motion is confined to this one composition and changes no layout dimensions. Existing real-link hover/focus feedback remains; illustrations have no new controls or focus stops.
+
+**Enhancement/fallback choices:** IntersectionObserver starts the sequence once when at least 15% of the board enters the inset viewport. CSS owns animation; no engine, scroll handlers or per-frame React state. A bounded one-second timer retires observation and listeners after the sequence; leaving view, hiding the tab or changing media preferences finishes it early. Effect cleanup also removes attributes/listeners/timers. The settled composition is the initial fallback, with no hidden pending state. Narrow screens (62em or less), reduced motion, forced colors and unsupported observer/media-query features remain static. Changes during the visit do not replay the sequence; a fresh wide, motion-enabled page load can play it once. `index.css` adds native smooth anchor scrolling only for wide/no-preference displays and explicitly keeps reduced motion instantaneous. Unsupported CSS smooth scrolling falls back to ordinary links. README records these choices. No product/release claims, dependencies or external integrations changed.
+
+**Code checks:** `npm run format`, then `npm run lint`, then `npm run typecheck` each exited 0 with no warnings or errors. Formatting covered authored source/configuration/documentation only, preserving generated lockfiles and binary/license originals; scripts contain no prohibited lifecycle hooks. A final documentation-only status update was formatted afterward. No tests, builds, launches, browser automation, screenshots, benchmarks or runtime probes were performed. Source inspection of lifecycle cleanup, media gates, static visibility and existing keyboard/touch links is not browser or performance acceptance.
+
+**Manual guide for Josh:**
+
+1. From the website directory, run `npm run dev` and open Vite's local address in a wide window with reduced motion off. Scroll to Shape; expect a brief paper/connection/chapter settling sequence, with stationary text and ordinary scrolling throughout.
+2. Scroll away and return; expect the settled composition without replay. Reload and scroll quickly past it; expect no layout jump or lingering effect when returning.
+3. Enable the operating system's reduced-motion setting and reload. Expect the complete static story and immediate Explore Collie/How it works/wordmark anchor navigation. Changing the preference during an effect should stop it.
+4. Reload at phone width, then try 200% zoom and keyboard navigation. Expect static, readable content, visible focus on real links and no focus stops on decorative layers. No drag or hover interaction is required on touch screens.
+5. At a wide size with motion allowed, activate Explore Collie and the wordmark. Expect native smooth navigation to Gather and back to the top, without trapping focus or scrolling. If the browser does not support smooth scrolling, ordinary jumps remain usable.
+
+**User results:** not supplied. Perceived motion, browser fallback behavior, reduced motion, responsive/zoom layout and keyboard/touch acceptance await user observations. WEB04–WEB08 remain unstarted; publication and all release/commerce gates are unchanged.
 
 ### Stage record format
 

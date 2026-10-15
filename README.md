@@ -3,8 +3,9 @@
 A Vite + React + TypeScript + Mantine marketing website for Collie Writer, a
 desktop nonfiction workspace. WEB01–WEB02 provide the branded homepage foundation,
 Gather → Shape → Write story, illustrative workspaces and local-file ownership
-section. The product is presented
-as **in development for Mac and Windows**. Downloads and purchases are not enabled.
+section. WEB03 adds a brief, once-per-load decorative settling sequence in Shape.
+The product is presented as **in development for Mac and Windows**. Downloads and
+purchases are not enabled.
 
 See [website-implementation-plan.md](website-implementation-plan.md) for the eight
 stages, current status and user-owned acceptance guide. Implement one requested
@@ -55,3 +56,20 @@ authorized by these checks. Documentation-only changes do not require them.
 Illustrative text is invented presentation content, not an app screenshot or real
 research. The static page performs no content uploads, checkout or AI requests.
 Assets are site-owned copies; no sibling checkout is needed at runtime.
+
+## Motion
+
+`use-shape-motion.ts` observes only the Shape board. On a wide screen with motion
+allowed, decorative paper edges settle toward a connection/chapter accent sequence;
+all text stays stationary. CSS owns the finite animation. The observer, media and
+visibility listeners retire after one second, or sooner on leaving view, hiding the
+tab or changing the motion/display preference. There are no scroll listeners,
+per-frame React updates or animation dependencies.
+
+Narrow screens (62em or less), reduced motion and forced colors retain a complete
+static composition. Missing observer/media-query support also leaves everything
+visible. If a visit starts static or an effect is interrupted, it stays static for
+that mount; reload at a wide size with motion allowed to see the sequence. Native
+smooth anchor scrolling is enabled only on wide screens with motion allowed;
+reduced-motion and narrow layouts use ordinary anchor jumps. Browser support may
+leave anchors instantaneous. Actual motion and navigation acceptance is user-owned.

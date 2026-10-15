@@ -1,5 +1,6 @@
 import { Paper } from '@mantine/core'
 import { exampleProject } from './example-project'
+import { useShapeMotion } from './use-shape-motion'
 import WorkspaceIllustration from './WorkspaceIllustration'
 import styles from './ProductStory.module.css'
 
@@ -38,9 +39,10 @@ function GatherIllustration() {
 }
 
 function PlanIllustration() {
+  const boardRef = useShapeMotion()
   return (
     <figure className={styles['plan-figure']}>
-      <div className={styles['plan-board']}>
+      <div ref={boardRef} className={styles['plan-board']}>
         <div className={styles['plan-material']}>
           <p className={styles['board-label']}>Material</p>
           <MaterialCard kind="note" />
