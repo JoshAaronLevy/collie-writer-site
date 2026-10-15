@@ -1,14 +1,16 @@
 import { useState } from 'react'
+import { MantineProvider } from '@mantine/core'
 import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
+import '@mantine/core/styles.css'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
+    <MantineProvider>
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
@@ -115,7 +117,7 @@ function App() {
 
       <div className="ticks"></div>
       <section id="spacer"></section>
-    </>
+    </MantineProvider>
   )
 }
 
