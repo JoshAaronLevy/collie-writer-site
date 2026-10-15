@@ -1,75 +1,55 @@
-# React + TypeScript + Vite
+# Collie Writer website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Vite + React + TypeScript + Mantine marketing website for Collie Writer, a
+desktop nonfiction workspace. WEB01 provides the branded homepage foundation,
+illustrative workspace and short workflow introduction. The product is presented
+as **in development for Mac and Windows**. Downloads and purchases are not enabled.
 
-Currently, two official plugins are available:
+See [website-implementation-plan.md](website-implementation-plan.md) for the eight
+stages, current status and user-owned acceptance guide. Implement one requested
+stage at a time. Website work does not authorize desktop/service changes or publication.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Local development — user operated
 
-## React Compiler
+With this checkout's npm dependencies installed, run `npm run dev` from the website
+directory and open the local address printed by Vite. The assistant does not launch
+the site or perform browser/runtime acceptance. Installation should preserve the
+lockfile and avoid dependency lifecycle scripts and audits; for a fresh checkout,
+use `npm ci --ignore-scripts --no-audit --no-fund`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+`npm run build` and `npm run preview` remain available for owner-operated production
+review in the later release stage. They are not part of the assistant's code checks.
+The site is noindex, has no approved canonical domain and has not been published.
 
-## Expanding the ESLint configuration
+## Required code checks
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+After code changes, run these commands in order:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. `npm run format`
+2. `npm run lint`
+3. `npm run typecheck`
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Fix all errors and warnings. Formatting targets authored source and root
+configuration/documentation, with the npm lockfile excluded; it does not traverse
+dependencies, public license originals, binary assets or generated output. Inspect
+the scope again if vendor/generated or historical test files are later present.
+ESLint covers TS/TSX and root JS/CJS configuration, with zero warnings allowed.
+TypeScript checks both application and Vite configuration without emitting JS;
+incremental diagnostic caches stay under ignored `node_modules/.tmp/`.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+No tests, harnesses, fixtures, automated verification scripts, test CI, builds,
+audits, app launches, browser automation, screenshots or runtime probes are
+authorized by these checks. Documentation-only changes do not require them.
 
-```
+## Source and assets
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+- `src/components/site/` owns the header/footer and their styles.
+- `src/features/home/` owns the hero, introduction and illustrative workspace.
+- `src/theme.ts` and `src/index.css` own the Mantine theme and global foundations.
+- [Asset provenance](src/assets/branding/README.md) records the unchanged approved
+  artwork, favicon and local font files. The [font license](public/licenses/SourceSerif4-OFL.txt)
+  is also linked from the site footer.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+Illustrative text is invented presentation content, not an app screenshot or real
+research. The static page performs no content uploads, checkout or AI requests.
+Assets are site-owned copies; no sibling checkout is needed at runtime.
