@@ -21,7 +21,8 @@ Adobe copyright and SIL Open Font License are in
 [`public/licenses/SourceSerif4-OFL.txt`](../../../public/licenses/SourceSerif4-OFL.txt)
 and linked in the website footer.
 
-The workspace illustration is authored HTML/CSS with invented public-spaces
-content. It is explicitly labeled as illustrative, is not a captured app screenshot,
-and contains no private project material or real scholarly quotations. All website
+The Gather, Plan and Write illustrations are authored HTML/CSS with shared invented
+public-spaces content from `src/features/home/example-project.ts`. They are explicitly
+labeled as illustrative, are not captured app screenshots, and contain no private
+project material or real scholarly quotations. All website
 assets are local to this checkout; there is no runtime dependency on the desktop repo.

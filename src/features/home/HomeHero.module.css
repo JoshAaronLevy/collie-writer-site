@@ -12,8 +12,7 @@
   min-width: 0;
 }
 
-.hero-eyebrow,
-.introduction-eyebrow {
+.hero-eyebrow {
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -69,54 +68,6 @@
   background: var(--color-green);
 }
 
-.workflow-introduction {
-  padding-block: clamp(3rem, 5vw, 5rem);
-  padding-inline: max(
-    var(--page-gutter),
-    calc((100vw - var(--page-width)) / 2)
-  );
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(2rem, 5vw, 5rem);
-  background: var(--color-green-dark);
-  color: var(--color-surface);
-}
-
-.introduction-eyebrow {
-  color: var(--color-sage);
-  margin-bottom: 1.5rem;
-}
-
-.introduction-heading h2 {
-  font: 400 clamp(2rem, 3vw, 3rem) / 1.15 var(--font-editorial);
-  letter-spacing: -0.035em;
-  scroll-margin-block-start: 3rem;
-}
-
-.introduction-heading h2:focus-visible {
-  outline-color: var(--color-sage);
-}
-
-.introduction-copy {
-  max-width: 32rem;
-  align-self: center;
-  font-size: 1rem;
-  line-height: 1.8;
-}
-
-.introduction-copy > p + p {
-  margin-top: 1rem;
-}
-
-.introduction-copy .workflow-sequence {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 1.75rem;
-  color: var(--color-sage);
-  font-size: 0.875rem;
-}
-
 @media (max-width: 62em) {
   .home-hero {
     grid-template-columns: minmax(0, 1fr);
@@ -127,11 +78,5 @@
   }
   .hero-heading {
     font-size: clamp(2.75rem, 6.8vw, 4.25rem);
-  }
-}
-
-@media (max-width: 48em) {
-  .workflow-introduction {
-    grid-template-columns: minmax(0, 1fr);
   }
 }

@@ -1,6 +1,6 @@
 # Collie Writer website implementation plan
 
-Prepared October 15, 2026. **WEB01 implementation complete — awaiting user testing. WEB02–WEB08 are not started.**
+Prepared October 15, 2026. **WEB01–WEB02 implementation complete — awaiting user testing. WEB03–WEB08 are not started.**
 
 This plan turns the supplied creative brief into eight independently requestable stages. “Implement stage WEB01” authorizes that stage's local website work and required code checks. Stop at its handoff for Josh's observations. It does not authorize the next stage, changes to the desktop repository, service deployment, publication, or live commerce.
 
@@ -447,7 +447,7 @@ Update this table at every requested stage boundary. “Not applicable” for pu
 | Stage | Scope                              | Implementation / checks               | User acceptance                      | Publication / activation       |
 | ----- | ---------------------------------- | ------------------------------------- | ------------------------------------ | ------------------------------ |
 | WEB01 | Foundation and first impression    | Complete; format/lint/typecheck clean | Awaiting user testing                | Not authorized                 |
-| WEB02 | Product story                      | Not started                           | Not requested                        | Not authorized                 |
+| WEB02 | Product story                      | Complete; format/lint/typecheck clean | Awaiting user testing                | Not authorized                 |
 | WEB03 | Motion and interaction             | Not started                           | Not requested                        | Not authorized                 |
 | WEB04 | Access and downloads               | Not started; no approved artifacts    | Not requested                        | Downloads unavailable          |
 | WEB05 | Help, trust and discoverability    | Not started; owner inputs pending     | Not requested                        | Content not approved/published |
@@ -489,6 +489,32 @@ Update this table at every requested stage boundary. “Not applicable” for pu
 5. Use Tab/Shift+Tab and activate Skip to content. Expect visible focus and a sensible path through real links, with no stops inside the illustrative editor. Open the footer font-license link; expect the original OFL text.
 
 **User results:** not supplied. Typography, layout, anchor/focus behavior and asset rendering await user observation. WEB02–WEB08 remain unstarted; no signed release, AI access, purchase readiness or publication is implied. Deployment and external account actions remain unperformed.
+
+### WEB02 — October 15, 2026 — implementation complete — awaiting user testing
+
+**Plan review:** reviewed the full plan, including WEB03–WEB08 dependencies, release/AI boundaries and manual acceptance. No blocker to WEB02 was found. The website Git tree was clean at this stage's start. WEB01 acceptance has not been supplied; requesting WEB02 authorizes this implementation without establishing prior browser acceptance. Read current desktop status, README, planning records, chapter material and export source to ground the copy; no desktop files were changed.
+
+**Implemented:**
+
+- `ProductStory.tsx` and its CSS Module replace the short introduction with clustered Gather material, a wider Plan composition, a prominent writing surface and a dark-green ownership section. `App.tsx` composes the story after the retained hero; obsolete introduction markup/styles were removed. Explore Collie and How it works now target the Gather heading.
+- `example-project.ts` keeps the invented public-spaces project, note, source excerpt and chapter consistent across the hero and story. The Plan composition explicitly associates that note/source with “Everyday encounters”; the writing illustration retains both beside the draft. Each illustration has an example-content caption, ordinary readable text and no interactive editor controls.
+- `WorkspaceIllustration.tsx` and its CSS Module add a larger writing variant with retained-original context and a further draft paragraph. Unique caption IDs support both instances. Responsive arrangements stack chapters, draft and material on narrow screens; decorative numbers/arrows/window ornaments are hidden from assistive technology.
+- Copy covers sources/originals, saved conversation context, manual chapter planning, citations and Word/PDF/Markdown/plain-text exports. Ownership explains offline non-AI work, explicit Save to a portable `.collie` file, and device-local unfinished drafts/settings. Roughly 400 words of homepage narrative/ownership copy, excluding illustration text and navigation, leave room for later access/FAQ content within the planned total budget.
+- Updated README and asset provenance. No new dependencies, images, screenshots, network requests, live AI, download/commerce controls or motion. The site retains its development state and noindex metadata. There is no access link before its destination exists.
+
+**Source review:** feature-owned components/styles, semantic section headings/figures, shared presentation content, no effects or event simulation, and stable caption references. This is source inspection, not visual or accessibility acceptance.
+
+**Code checks:** `npm run format`, `npm run lint` and `npm run typecheck` each exited 0 with no warnings or errors, in that order. No tests, builds, launches, browser automation, screenshots, audits or runtime probes were performed.
+
+**Manual guide for Josh:**
+
+1. From the website directory, run `npm run dev` and open Vite's local address. Select Explore Collie or How it works; expect the Gather heading, “A place for the pieces.”
+2. Scroll through Gather, Shape and Write. Expect the same bench note and square excerpt to connect to “Everyday encounters,” then appear beside its larger draft. Every illustration should be labeled; depicted app controls should remain presentational.
+3. Narrow the browser to phone width and zoom to 200%. Expect a readable stacked sequence, intact captions and no sideways page scrolling.
+4. Read “Your work. Your files.” Expect offline/local work and explicit portable Save explained, with the device-local limitation visible.
+5. Use keyboard navigation and, if available, screen-reader heading navigation. Expect a sensible reading order, visible focus on real links and no focus stops on illustrated material or editor controls.
+
+**User results:** not supplied. Visual layout, small-screen readability, zoom, anchor/focus behavior and assistive-technology behavior await user testing. WEB03–WEB08 remain unstarted. No publication, desktop release, AI access or commerce acceptance is implied.
 
 ### Stage record format
 

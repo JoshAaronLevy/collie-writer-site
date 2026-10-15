@@ -1,8 +1,9 @@
 # Collie Writer website
 
 A Vite + React + TypeScript + Mantine marketing website for Collie Writer, a
-desktop nonfiction workspace. WEB01 provides the branded homepage foundation,
-illustrative workspace and short workflow introduction. The product is presented
+desktop nonfiction workspace. WEB01–WEB02 provide the branded homepage foundation,
+Gather → Shape → Write story, illustrative workspaces and local-file ownership
+section. The product is presented
 as **in development for Mac and Windows**. Downloads and purchases are not enabled.
 
 See [website-implementation-plan.md](website-implementation-plan.md) for the eight
@@ -44,7 +45,8 @@ authorized by these checks. Documentation-only changes do not require them.
 ## Source and assets
 
 - `src/components/site/` owns the header/footer and their styles.
-- `src/features/home/` owns the hero, introduction and illustrative workspace.
+- `src/features/home/` owns the hero, product story, ownership section and
+  illustrative workspaces. `example-project.ts` holds their shared invented content.
 - `src/theme.ts` and `src/index.css` own the Mantine theme and global foundations.
 - [Asset provenance](src/assets/branding/README.md) records the unchanged approved
   artwork, favicon and local font files. The [font license](public/licenses/SourceSerif4-OFL.txt)
