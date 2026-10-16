@@ -1,4 +1,5 @@
 import collieArtwork from '../../assets/branding/collie-writer.png'
+import { releaseAvailability } from '../../content/release'
 import styles from './SiteLayout.module.css'
 
 export function SiteHeader() {
@@ -6,7 +7,7 @@ export function SiteHeader() {
     <header className={styles['site-header']} id="top" tabIndex={-1}>
       <a
         className={styles['brand-link']}
-        href="#top"
+        href="/#top"
         aria-label="Collie Writer — home"
       >
         <img
@@ -21,9 +22,13 @@ export function SiteHeader() {
         </span>
       </a>
       <nav aria-label="Main navigation" className={styles['site-navigation']}>
-        <a href="#how-it-works">
+        <a href="/#how-it-works">
           How it works <span aria-hidden="true">↗</span>
         </a>
+        <a href="/#pricing">Pricing</a>
+        {releaseAvailability.available ? (
+          <a href={releaseAvailability.action.href}>Download</a>
+        ) : null}
       </nav>
     </header>
   )
@@ -33,11 +38,18 @@ export function SiteFooter() {
   return (
     <footer className={styles['site-footer']}>
       <div>
-        <a href="#top" className={styles['footer-wordmark']}>
+        <a href="/#top" className={styles['footer-wordmark']}>
           Collie Writer.
         </a>
         <p>A little more room to think.</p>
       </div>
+      <nav
+        className={styles['footer-navigation']}
+        aria-label="Footer navigation"
+      >
+        <a href="/#pricing">Pricing</a>
+        <a href="/downloads">Downloads</a>
+      </nav>
       <div className={styles['footer-details']}>
         <p>Permanently ad-free.</p>
         <a href="/licenses/SourceSerif4-OFL.txt">

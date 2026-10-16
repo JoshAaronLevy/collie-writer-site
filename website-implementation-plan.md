@@ -1,6 +1,6 @@
 # Collie Writer website implementation plan
 
-Prepared October 15, 2026. **WEB01–WEB03 implementation complete — awaiting user testing. WEB04–WEB08 are not started.**
+Prepared October 15, 2026. **WEB01–WEB04 implementation complete — awaiting user testing. WEB05–WEB08 are not started.**
 
 This plan turns the supplied creative brief into eight independently requestable stages. “Implement stage WEB01” authorizes that stage's local website work and required code checks. Stop at its handoff for Josh's observations. It does not authorize the next stage, changes to the desktop repository, service deployment, publication, or live commerce.
 
@@ -449,7 +449,7 @@ Update this table at every requested stage boundary. “Not applicable” for pu
 | WEB01 | Foundation and first impression    | Complete; format/lint/typecheck clean | Awaiting user testing                | Not authorized                 |
 | WEB02 | Product story                      | Complete; format/lint/typecheck clean | Awaiting user testing                | Not authorized                 |
 | WEB03 | Motion and interaction             | Complete; format/lint/typecheck clean | Awaiting user testing                | Not authorized                 |
-| WEB04 | Access and downloads               | Not started; no approved artifacts    | Not requested                        | Downloads unavailable          |
+| WEB04 | Access and downloads               | Complete; format/lint/typecheck clean | Awaiting user testing                | Downloads unavailable          |
 | WEB05 | Help, trust and discoverability    | Not started; owner inputs pending     | Not requested                        | Content not approved/published |
 | WEB06 | Purchase in app journey            | Not started; COM01/APP01 pending      | No commerce results supplied         | Checkout disabled              |
 | WEB07 | Website purchase and activation    | Not started; COM02 required           | No website-purchase results supplied | Website sales unavailable      |
@@ -535,6 +535,31 @@ Update this table at every requested stage boundary. “Not applicable” for pu
 5. At a wide size with motion allowed, activate Explore Collie and the wordmark. Expect native smooth navigation to Gather and back to the top, without trapping focus or scrolling. If the browser does not support smooth scrolling, ordinary jumps remain usable.
 
 **User results:** not supplied. Perceived motion, browser fallback behavior, reduced motion, responsive/zoom layout and keyboard/touch acceptance await user observations. WEB04–WEB08 remain unstarted; publication and all release/commerce gates are unchanged.
+
+### WEB04 — October 15, 2026 — implementation complete — awaiting user testing
+
+**Plan review and inputs:** reviewed all eight stages, launch states, release/commerce dependencies and prior evidence. The website tree was clean at the start. WEB01–WEB03 user acceptance remains unsupplied. Refreshed desktop `AGENTS.md`, `docs/release/release-candidate-manifest.json`, `AccessPanel.tsx`, `DirectAccessPanel.tsx`, entitlement `pages.mjs` and `policy.mjs` as read-only references. The manifest remains `blocked-no-go` with absent candidate version, URLs, signing and owner approval; current app instructions still report NO-GO and checkout policy remains false. No approved artifact metadata was supplied. This blocks active downloads, not the requested development-state implementation.
+
+**Implemented:**
+
+- `content/offers.ts` and `features/access/Pricing.tsx` with its CSS Module: three calm, responsive rows under Planned pricing, preserving $9.99 USD/month, $199 USD once and untimed Free rights. Copy covers unrestricted switching, individual exports, retained essential access, monthly offline grace/refresh, lifetime edition updates and separate subscription cancellation. United States/USD intent and unavailable purchasing are explicit. One availability-aware next action; no disabled Buy buttons or checkout.
+- `content/release.ts`: one typed development/released record and production validation for release date/version/approval, release notes, approved HTTPS origin, versioned installer filenames, compatible platform/architecture/format/signing, supported OS, install steps and acceptance references. An incomplete or conflicting record yields no available release. Only DMG/EXE installers are supported in this stage; ZIP updater artifacts are excluded. Validation is not cryptographic verification or public-release approval. Current metadata contains no invented release values or placeholder URLs.
+- `pages/Downloads.tsx` and its CSS Module: Mac and Windows remain visible and reachable via native platform anchors. Both currently say Not available yet, without architecture promises or fake controls. Approved records can render matching processor choices, exact version/date, supported systems, installation steps and release notes. No automatic downloads, detection, redirects or fetched manifests. Moving a saved `.collie` file is explained separately from restoring paid access.
+- `App.tsx`, header/footer and hero: pinned React Router 8.4.0 supplies Home/Downloads routes and minimal missing-path recovery. Native document/fragment links retain normal browser navigation; Pricing remains a homepage anchor. Header/hero/pricing download actions share validated availability, while purchasing stays independently unavailable. Added working Pricing/Downloads navigation only. React-rendered page titles do not replace WEB05's delivered metadata work. README documents content ownership, release input requirements, route/host limitations and Node requirement.
+
+**Source references:** React Router's official [declarative installation](https://reactrouter.com/start/declarative/installation) and [routing](https://reactrouter.com/start/declarative/routing), plus React's [title reference](https://react.dev/reference/react-dom/components/title), consulted October 15, 2026. Installed the pinned router with `--ignore-scripts --no-audit --no-fund`; preserved the existing dependencies and lockfile. Applied the React best-practices skill to source review: small semantic components, derived availability, stable list keys, no new effects/event handlers for navigation, and no browser storage/network work. No desktop/service files changed.
+
+**Code checks:** `npm run format`, then `npm run lint`, then `npm run typecheck` each exited 0 with no warnings or errors on final application code. Format scope remains authored source/root configuration/docs; generated lockfile, public originals and dependencies remain outside it. A final documentation-only status update was formatted afterward. No tests, builds, launches, screenshots, browser probes, dependency audits or external activation were performed.
+
+**Manual guide for Josh:**
+
+1. Run `npm run dev` in the website directory and open Vite's address. Select Pricing; expect the three planned offers, exact US/USD prices and a clear purchases-unavailable notice. Explore Collie should return to Gather.
+2. Open Download availability or the footer Downloads link, then directly load/reload `/downloads`. Expect the Downloads page, development status, and no installer buttons or invented version/date/OS requirements.
+3. Select Mac and Windows. Expect each visible platform section to be reached, both labeled Not available yet, with no download or redirect. Both choices must remain reachable on a phone-sized window.
+4. From Downloads, use Pricing, How it works and the wordmark, then browser Back/Forward. Expect the correct homepage destinations and usable return navigation. Try Tab/Shift+Tab, the skip link and 200% zoom; expect visible focus, readable rows/sections and no sideways page scrolling.
+5. Open an unknown path. Expect basic page-not-found recovery with working Home and Downloads links. Hosted HTTP status/metadata acceptance remains a later stage.
+
+**User results and limits:** not supplied. Browser routing/reload/anchor behavior, responsive layout and accessibility remain awaiting user testing. No real download or installation has been tested or enabled; no accepted version, artifacts, signing/native evidence or launch date exists in the site record. Roughly 650–700 words of homepage narrative/comparison copy, excluding illustration content/navigation, preserves room for WEB05's separately budgeted FAQ answers. WEB05–WEB08 remain unstarted. Public host/direct-load status, delivered metadata, policies, commercial activation and publication remain pending.
 
 ### Stage record format
 

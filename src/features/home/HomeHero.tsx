@@ -1,4 +1,5 @@
 import { Button } from '@mantine/core'
+import { releaseAvailability } from '../../content/release'
 import WorkspaceIllustration from './WorkspaceIllustration'
 import styles from './HomeHero.module.css'
 
@@ -17,15 +18,24 @@ export default function HomeHero() {
         </p>
         <Button
           component="a"
-          href="#how-it-works"
+          href={releaseAvailability.action.href}
           className={styles['explore-link']}
-          rightSection={<span aria-hidden="true">↓</span>}
+          rightSection={
+            <span aria-hidden="true">
+              {releaseAvailability.available ? '↗' : '↓'}
+            </span>
+          }
         >
-          Explore Collie
+          {releaseAvailability.action.label}
         </Button>
+        {releaseAvailability.available ? (
+          <a className={styles['story-link']} href="/#how-it-works">
+            See how it works
+          </a>
+        ) : null}
         <p className={styles['development-notice']}>
           <span aria-hidden="true" />
-          In development for Mac and Windows
+          {releaseAvailability.notice}
         </p>
       </div>
       <WorkspaceIllustration />
