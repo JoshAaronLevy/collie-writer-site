@@ -32,9 +32,5 @@ export const offers = [
   },
 ] as const
 
-export const purchaseAvailability = {
-  status: 'unavailable',
-  heading: 'Planned pricing',
-  notice:
-    'Purchases are not yet available. Initial sales are planned for the United States, in USD.',
-} as const
+export type Plan = (typeof offers)[number]['id']
+export type PaidPlan = Exclude<Plan, 'free'>

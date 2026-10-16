@@ -53,6 +53,13 @@
   color: var(--color-muted);
   font-size: 0.875rem;
 }
+.offer-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
 .pricing-note {
   max-width: 52rem;
   margin-top: 1.5rem;

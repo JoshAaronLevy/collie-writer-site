@@ -1,8 +1,11 @@
 import collieArtwork from '../../assets/branding/collie-writer.png'
 import { releaseAvailability } from '../../content/release'
+import { reviewMode } from '../../content/site'
+import { useLocation } from 'react-router'
 import styles from './SiteLayout.module.css'
 
 export function SiteHeader() {
+  const { pathname } = useLocation()
   return (
     <header className={styles['site-header']} id="top" tabIndex={-1}>
       <a
@@ -26,6 +29,14 @@ export function SiteHeader() {
           How it works <span aria-hidden="true">↗</span>
         </a>
         <a href="/#pricing">Pricing</a>
+        <a
+          href="/help"
+          aria-current={
+            pathname.replace(/\/$/, '') === '/help' ? 'page' : undefined
+          }
+        >
+          Help
+        </a>
         {releaseAvailability.available ? (
           <a href={releaseAvailability.action.href}>Download</a>
         ) : null}
@@ -49,6 +60,12 @@ export function SiteFooter() {
       >
         <a href="/#pricing">Pricing</a>
         <a href="/downloads">Downloads</a>
+        <a href="/help">Help</a>
+        <a href="/privacy">Privacy{reviewMode ? ' (draft)' : ''}</a>
+        <a href="/terms">Terms{reviewMode ? ' (draft)' : ''}</a>
+        <a href="/purchases">
+          Purchase information{reviewMode ? ' (draft)' : ''}
+        </a>
       </nav>
       <div className={styles['footer-details']}>
         <p>Permanently ad-free.</p>

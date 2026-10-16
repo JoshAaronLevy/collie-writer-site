@@ -84,7 +84,6 @@ function PlatformDownloads({ platform }: { platform: Platform }) {
 export default function Downloads() {
   return (
     <div className={styles['downloads-page']}>
-      <title>Downloads — Collie Writer</title>
       <div className={styles['page-intro']}>
         <p className={styles['eyebrow']}>{releaseAvailability.notice}</p>
         <h1>Room for your next chapter.</h1>

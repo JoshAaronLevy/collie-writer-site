@@ -54,8 +54,13 @@
 }
 
 .site-navigation a:hover,
+.site-navigation a[aria-current='page'],
 .brand-link:hover {
   text-decoration: underline;
+}
+
+.footer-navigation {
+  max-width: 32rem;
 }
 
 .site-footer {

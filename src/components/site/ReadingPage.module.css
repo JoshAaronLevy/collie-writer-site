@@ -1,0 +1,56 @@
+.reading-page {
+  width: min(52rem, calc(100% - var(--page-gutter) * 2));
+  margin-inline: auto;
+  padding-block: clamp(3rem, 6vw, 5rem);
+  overflow-wrap: anywhere;
+}
+.eyebrow {
+  color: var(--color-green);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.reading-page h1 {
+  font: 400 clamp(2.5rem, 5vw, 4rem) / 1.1 var(--font-editorial);
+  letter-spacing: -0.04em;
+}
+.intro {
+  margin-top: 1.5rem;
+  color: var(--color-muted);
+  font-size: 1.125rem;
+}
+.page-content > section,
+.page-content > aside {
+  margin-top: 2.5rem;
+}
+.page-content h2 {
+  font: 400 1.75rem / 1.3 var(--font-editorial);
+  margin-bottom: 1rem;
+}
+.page-content h3 {
+  font: 400 1.375rem / 1.3 var(--font-editorial);
+  margin-block: 1.5rem 0.75rem;
+}
+.page-content p + p {
+  margin-top: 1rem;
+}
+.page-content li + li {
+  margin-top: 0.75rem;
+}
+.page-content ol,
+.page-content ul {
+  padding-left: 1.5rem;
+}
+.page-content nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin-top: 2rem;
+}
+.page-content nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+}

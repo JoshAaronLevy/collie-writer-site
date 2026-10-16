@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\" \"*.{js,cjs,ts,json,html,md}\" .prettierrc.json",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\" \"build-support/**/*.ts\" \"*.{js,cjs,ts,json,html,md}\" .prettierrc.json",
     "lint": "eslint . --max-warnings 0",
     "typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json",
     "preview": "vite preview"
@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@resvg/resvg-js": "2.6.2",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",

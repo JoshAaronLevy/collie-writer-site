@@ -1,5 +1,6 @@
 import { Button } from '@mantine/core'
-import { offers, purchaseAvailability } from '../../content/offers'
+import { offers } from '../../content/offers'
+import { purchaseAvailability } from '../../content/commerce'
 import { releaseAvailability } from '../../content/release'
 import styles from './Pricing.module.css'
 
@@ -28,6 +29,12 @@ export default function Pricing() {
             <div className={styles['offer-copy']}>
               <p>{offer.summary}</p>
               <p>{offer.detail}</p>
+              <a
+                className={styles['offer-link']}
+                href={`/purchases?plan=${offer.id}#plan`}
+              >
+                {offer.id === 'free' ? 'About Free' : `Explore ${offer.name}`}
+              </a>
             </div>
           </article>
         ))}
@@ -44,6 +51,7 @@ export default function Pricing() {
         {!releaseAvailability.available ? (
           <a href="/downloads">Download availability</a>
         ) : null}
+        <a href="/help#restore">Already purchased? Restore access</a>
       </div>
     </section>
   )

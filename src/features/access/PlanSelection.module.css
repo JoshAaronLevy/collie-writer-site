@@ -1,0 +1,62 @@
+.plan-choices {
+  gap: 0.5rem;
+}
+.plan-choices a {
+  flex: 1 1 10rem;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 1rem;
+  border: 1px solid var(--color-rule);
+  border-radius: 0.5rem;
+  text-decoration: none;
+}
+.plan-choices a span:first-child {
+  font-weight: 600;
+}
+.plan-choices a span + span {
+  font-size: 0.875rem;
+}
+.plan-choices a[aria-current='true'] {
+  border-color: var(--color-green);
+  background: var(--color-green);
+  color: var(--color-paper);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+.selected-plan {
+  margin-top: 1rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid var(--color-rule);
+  border-radius: 0.5rem;
+  background: var(--color-surface);
+}
+.selected-plan h3 {
+  margin-top: 0;
+}
+.plan-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin-top: 1.5rem;
+}
+.plan-actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  white-space: normal;
+  height: auto;
+}
+.plan-note {
+  margin-top: 1rem;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+@media (forced-colors: active) {
+  .plan-choices a[aria-current='true'] {
+    outline: 2px solid Highlight;
+    outline-offset: -3px;
+  }
+}

@@ -1,6 +1,6 @@
 # Collie Writer website implementation plan
 
-Prepared October 15, 2026. **WEB01–WEB04 implementation complete — awaiting user testing. WEB05–WEB08 are not started.**
+Prepared October 15, 2026. **WEB01–WEB04 implementation complete — awaiting user testing. WEB05 local implementation complete; public-content finalization partial, with owner-authorized placeholders. WEB06–WEB07 website preparation complete — awaiting user testing; format/lint/typecheck clean, purchase integrations blocked by COM01/COM02/APP01. WEB08 is not started.**
 
 This plan turns the supplied creative brief into eight independently requestable stages. “Implement stage WEB01” authorizes that stage's local website work and required code checks. Stop at its handoff for Josh's observations. It does not authorize the next stage, changes to the desktop repository, service deployment, publication, or live commerce.
 
@@ -444,16 +444,16 @@ Dependency sequence:
 
 Update this table at every requested stage boundary. “Not applicable” for publication means the stage itself publishes nothing; it is not approval for later publication.
 
-| Stage | Scope                              | Implementation / checks               | User acceptance                      | Publication / activation       |
-| ----- | ---------------------------------- | ------------------------------------- | ------------------------------------ | ------------------------------ |
-| WEB01 | Foundation and first impression    | Complete; format/lint/typecheck clean | Awaiting user testing                | Not authorized                 |
-| WEB02 | Product story                      | Complete; format/lint/typecheck clean | Awaiting user testing                | Not authorized                 |
-| WEB03 | Motion and interaction             | Complete; format/lint/typecheck clean | Awaiting user testing                | Not authorized                 |
-| WEB04 | Access and downloads               | Complete; format/lint/typecheck clean | Awaiting user testing                | Downloads unavailable          |
-| WEB05 | Help, trust and discoverability    | Not started; owner inputs pending     | Not requested                        | Content not approved/published |
-| WEB06 | Purchase in app journey            | Not started; COM01/APP01 pending      | No commerce results supplied         | Checkout disabled              |
-| WEB07 | Website purchase and activation    | Not started; COM02 required           | No website-purchase results supplied | Website sales unavailable      |
-| WEB08 | Release preparation and acceptance | Not started                           | Not requested                        | No deployment authorization    |
+| Stage | Scope                              | Implementation / checks                                         | User acceptance                              | Publication / activation             |
+| ----- | ---------------------------------- | --------------------------------------------------------------- | -------------------------------------------- | ------------------------------------ |
+| WEB01 | Foundation and first impression    | Complete; format/lint/typecheck clean                           | Awaiting user testing                        | Not authorized                       |
+| WEB02 | Product story                      | Complete; format/lint/typecheck clean                           | Awaiting user testing                        | Not authorized                       |
+| WEB03 | Motion and interaction             | Complete; format/lint/typecheck clean                           | Awaiting user testing                        | Not authorized                       |
+| WEB04 | Access and downloads               | Complete; format/lint/typecheck clean                           | Awaiting user testing                        | Downloads unavailable                |
+| WEB05 | Help, trust and discoverability    | Local code complete; checks clean; public content partial       | Awaiting user testing                        | Seller/support/policies/host pending |
+| WEB06 | Purchase in app journey            | Website preparation complete; checks clean; COM01/APP01 pending | Awaiting website review; no commerce results | Checkout disabled                    |
+| WEB07 | Website purchase and activation    | Website preparation complete; checks clean; COM02 required      | Awaiting website review; no purchase results | Website sales unavailable            |
+| WEB08 | Release preparation and acceptance | Not started                                                     | Not requested                                | No deployment authorization          |
 
 ### Planning record — October 15, 2026
 
@@ -561,6 +561,33 @@ Update this table at every requested stage boundary. “Not applicable” for pu
 
 **User results and limits:** not supplied. Browser routing/reload/anchor behavior, responsive layout and accessibility remain awaiting user testing. No real download or installation has been tested or enabled; no accepted version, artifacts, signing/native evidence or launch date exists in the site record. Roughly 650–700 words of homepage narrative/comparison copy, excluding illustration content/navigation, preserves room for WEB05's separately budgeted FAQ answers. WEB05–WEB08 remain unstarted. Public host/direct-load status, delivered metadata, policies, commercial activation and publication remain pending.
 
+### WEB05 — October 15, 2026 — local implementation complete; public-content finalization partial
+
+**Plan review and missing inputs:** reviewed the full eight-stage plan and current WEB01–WEB04 evidence; website Git was clean at the start. Earlier user acceptance has not been supplied. Asked for seller, support, domain/host and approved privacy/retention/refund terms; none have been supplied during this stage. Those inputs block public-content/host finalization, not local Help/FAQ/routing and metadata source preparation. No seller, address, support endpoint, refund period, domain or release was invented. The site remains a local noindex review, with publication unperformed and unauthorized.
+
+**Implemented:**
+
+- `content/faq.ts`, `features/home/Faq.tsx` and styles: ten source-grounded answers; four short disclosures on Home and the full set in Help. Native details/summary preserves keyboard/touch behavior without new event listeners, storage or animation. Covers free/paid rights, offline limits, local Save/recovery, personal cloud folders, unoffered AI, supported import versus original attachments, citations/exports, transfer and subscription ending.
+- `pages/Help.tsx`, `Privacy.tsx`, `Terms.tsx`, `Purchases.tsx`, shared ReadingPage/ReviewNotice: practical Save/Open/transfer steps, separate purchase-access context, clear support unavailability, and source-grounded policy drafts. Privacy distinguishes website code, future host requests/logs, local projects, purchase records and optional provider context. Draft banners and footer labels are explicit. Support asks for concise issue/receipt information when available, never private projects or credentials. No live checkout, restore form or new legal promises.
+- `App.tsx`, header/footer and NotFound: all six planned site routes, working Help/trust links, wrapping mobile navigation, current Help indication, skip-link continuity and Home/Downloads/Help recovery. Native document/fragment links remain in use. No hidden mobile menu or decorative focus stops were added.
+- `content/site.ts` and `pages.ts`: one explicit review/public setting, absent owner fields, support URL validation, route metadata and a public-output guard requiring actual approval records and missing content fields. Entering fields does not replace review of the draft prose. No canonical origin is guessed.
+- `build-support/site-output.ts`, `vite.config.ts`, HTML boundary: Vite prepares distinct delivered HTML heads for Home, Downloads, Help, Privacy, Terms, Purchases and 404, retaining processed asset URLs. Includes per-page title/description, social metadata and favicon. Removed superseded client-only title tags. Review output is noindex/nofollow, robots disallows all and sitemap contains no URLs. Future approved-origin metadata uses absolute canonical/social URLs; current canonical/og:url are omitted and the image path remains local. 404 is always noindex/noncanonical and excluded from the sitemap. Only named site routes can enter a public sitemap; service completion pages cannot.
+- Authored `social-card.svg` and production PNG generation: 1200×630 paper/green composition, existing mascot/wordmark, Gather/Shape/Write and current availability. Pinned build-only `@resvg/resvg-js` 2.6.2 was installed with lifecycle scripts/audits disabled. Uses unchanged local artwork/fonts and no remote assets. Social rendering and production generation were not executed by the assistant. README records output paths and host requirements; no host-specific configuration is invented while the host is unknown.
+
+**Source/official references:** refreshed desktop README/AGENTS, library and project-actions UI, source inspector, selected-file import allowlist, import-recovery contract, citation selector, direct-access UI and entitlement `pages.mjs`. Some historical README-linked guide paths are absent; current source supplied the UI names and boundaries instead. The desktop/service stayed read-only. Consulted the official [Vite plugin API](https://vite.dev/guide/api-plugin) and [resvg-js repository](https://github.com/thx/resvg-js), October 15, 2026; inspected installed Vite hook types/source and resvg types. Applied the React best-practices source checklist already used in this conversation. This establishes implementation references, not runtime or legal acceptance.
+
+**Code checks:** `npm run format`, then `npm run lint`, then `npm run typecheck` each exited 0 without errors or warnings. Added only authored `build-support/**/*.ts` to formatter/typecheck ownership and Node globals to its lint context; generated output, vendor dependencies, originals and lockfile remain outside broad formatting. Typechecking does not invoke the output plugin or generate assets. No tests, builds, launches, screenshots, browser probes, audits or publication were performed. Documentation status/provenance changes were formatted afterward.
+
+**Manual guide for Josh:**
+
+1. Run `npm run dev` and open Home. Expand FAQ entries with mouse/touch, Enter and Space; expect four readable answers and a working link to all ten on Help. No motion is needed to reveal an answer.
+2. Open Help. Expect source-matched New project, Save, Save As…, Open project file… and Open backup… guidance, separate file/access recovery, and an honest support-unavailable message. Navigate its topics by keyboard.
+3. Open Privacy, Terms and Purchase information from the footer. Expect unmistakable local-review banners and explicit unresolved owner/policy details, with no live purchase, contact form or invented refund promise.
+4. Directly load/reload every named route and an unknown route. Expect the matching content; unknown paths offer Home, Downloads and Help. Use phone width, 200% zoom, skip links and reduced motion; expect readable text and visible focus without sideways scrolling.
+5. When ready to review generated output, run `npm run build`, then `npm run preview` yourself. Inspect View Source on each named page for its title/description/social tags and noindex; expect no canonical URL without an approved origin. Inspect robots/sitemap for review behavior and open `/social/collie-writer.png` for the 1200×630 composition. Generated output, raster appearance and host responses remain unobserved until you report them.
+
+**Outstanding:** seller/support and final policy content/approval; actual domain/host, logging/retention and exact hosted route/404/header behavior; user-observed browser, accessibility, generated HTML and social-image results. Local implementation is ready for user testing; **WEB05 as a public-content stage remains partial**. WEB06–WEB08 are unstarted. Downloads, AI/commerce eligibility and publication gates remain unchanged.
+
 ### Stage record format
 
 Append a short dated entry when work occurs:
@@ -575,3 +602,36 @@ Append a short dated entry when work occurs:
 > Publication/activation: unperformed, or separately authorized action and actual evidence.
 
 Keep this record compact. Source inspection and clean code checks do not establish browser behavior, native installation, purchase success, legal approval or release readiness.
+
+### WEB06 / WEB07 — October 15, 2026 — website preparation; integrations remain blocked
+
+**Requested boundary:** Josh explicitly requested both stages together, implementing what can be prepared before finalizing the purchase process. He also authorized placeholders for seller/support/policy details. Reviewed the full plan, source and current prerequisites; retained the uncommitted WEB05 work. Earlier user acceptance remains unsupplied. This combined request authorizes the two website preparation stages together; WEB08 is not started. Existing desktop pricing/purchase/restore controls already cover the proposed app entry, so no duplicate modal or desktop/service modification was needed.
+
+**Implemented WEB06 preparation:**
+
+- `content/commerce.ts` replaces the permanent unavailable literal formerly in `offers.ts`. It derives unavailable, download-free/purchases-unavailable, accepted in-app and accepted website presentations. Actual configuration remains unavailable. Common approval requires a matching accepted release, live HTTPS service origin, public policy readiness (including service privacy), and explicit commercial/direct-route/desktop acceptance references. Records are content guards, not proof of approval or runtime availability. Release downloads remain independent.
+- Home Pricing now has working Free/Monthly/Lifetime detail links and restore help. `features/access/PlanSelection.tsx` and its CSS Module provide a compact selection panel within the existing `/purchases` route, with shared offer copy, one primary next step and visible preview status. Native query/fragment links retain navigation/reload semantics. Absent, unsupported or repeated `plan` values fall back to Free. No query can set a destination, price, payment result or active commerce state.
+- Purchase information provides the new-user and installed-user Settings → Collie access path, service payment confirmation, code retention and app Check completion. `PurchaseHelp.tsx` supplies restore steps, replacement-computer guidance, five contextual problem disclosures and authenticated subscription management. Restoring purchase access stays separate from project transfer; new-sale unavailability does not remove restore help. Pending/unknown payment never prompts another automatic charge.
+
+**Implemented WEB07 preparation:**
+
+- Valid standalone configuration can generate only the approved service origin's fixed `/buy/monthly` and `/buy/lifetime` destinations, behind a distinct `website-purchase-v1` contract/acceptance record. Missing standalone evidence retains an independently accepted in-app path; review mode exposes neither checkout route. The service entry is an ordinary referrer-suppressed link, not a cross-origin API client. Selecting a website plan does not start a purchase or select an app plan automatically.
+- Purchase information describes the planned buy-before-install route and the three-step confirmed journey: save code, install/open, restore. Help covers pending, failed/canceled, closed/expired sessions, lost code, service outage and recurring billing. There is no marketing success/activation page, payment-status lookup, recovery-code input, storage, Paddle script or grant authority. A return to `/help#payment-help` is guidance only, regardless of URL parameters.
+- `purchase-service-handoff.md` makes COM01/COM02/APP01 work concrete: fixed public entries, proposed service-internal request/status semantics, secure completion authority, durable attempts/fulfillment, deliberate recovery display/replacement, schema-1 migration and unchanged desktop restore compatibility. Proposed service endpoints are clearly identified as unimplemented; they are not fake website routes or guessed Paddle APIs.
+- FAQ, Terms, Privacy, Help intro and Purchases metadata now share availability. Privacy adds a final `purchasePrivacy` content owner and an explicit placeholder for standalone session/cookie/display retention. Seller/support/refund details remain review placeholders; no domain, live links, merchant approval or legal promise was invented. README documents configuration and local review. No new dependencies or build/output routes were needed.
+
+**Source/provider review:** inspected current desktop `AccessPanel.tsx`, `DirectAccessPanel.tsx`, `WorkspaceNavigation.tsx`, direct configuration/keys, and service README/policy/server/connect/store/Paddle/reconciliation source. Existing checkout remains disabled, desktop origin null and issuer keys empty. Official Paddle links/date and the source reconciliation are recorded in the [service handoff](purchase-service-handoff.md). Material findings: the service rejects query strings needed by provider `_ptxn` payment links; successful recovery requests currently rotate the customer's code; US-only checkout enforcement is not implemented; standalone browser initiation and a preserving migration are absent. These require service work and owner acceptance, not a marketing workaround. No successful transaction, real provider configuration or runtime observation is claimed.
+
+**Source quality review:** applied the React best-practices skill to semantic feature-owned components, stable list keys, derived selection/availability, native navigation/disclosures and no effects, redundant state, fetches or new runtime libraries. Local CSS supplies wrapping plan choices/actions, selected/focus semantics and forced-color emphasis. Inspection is not browser/accessibility acceptance. Only authored website source/documentation was edited; the sibling desktop's untracked `data/` and creative brief remain untouched.
+
+**Code checks:** `npm run format`, then `npm run lint`, then `npm run typecheck` each exited 0 with no warnings or errors on final application code. The final sequence followed a small button/copy refinement. Authored source/configuration/docs only were formatted; generated assets, dependency lockfile, public originals and historical tests remained outside scope. Documentation-only status changes were formatted afterward. No tests, builds, app/service launches, previews, browser automation, screenshots, audits, probes, transactions, secrets, account actions or deployments were performed.
+
+**Manual guide for Josh — website preparation only:**
+
+1. In the website directory run `npm run dev` and open Vite's local address. From Home Pricing choose Explore Monthly, Explore Lifetime and About Free. Expect the corresponding plan panel, exact existing rights/prices, clear purchase unavailability and a working non-purchase next step.
+2. Switch plans, reload and use browser Back/Forward. Expect the selected plan to follow the URL; directly opening `/purchases?plan=unknown#plan` or repeated plan parameters should show Free. Opening the page with a purported success query must never show paid confirmation or activate anything.
+3. Follow Purchase in the app and Planned: buy before installing. Expect source-matched app labels, distinct new/existing-user paths, code/Check completion steps and no promise of automatic activation. Downloads still explains that no accepted installers are available.
+4. Open Help → Restore a purchase, Purchase help and Manage subscription. Expand each problem with keyboard/touch. Expect targeted advice, a reminder not to repurchase an uncertain payment, separate file transfer, and no recovery-code/contact submission form. Support remains a placeholder.
+5. At phone width and 200% zoom, use Tab/Shift+Tab and the plan/topic links. Expect readable, wrapping controls, visible focus, a clear selected plan and usable disclosures. Review refund/privacy/terms placeholders; no payment, account creation or service setup is needed.
+
+**Handoff status:** requested website preparation **implementation complete — awaiting user testing**; all three required code checks are clean. WEB06/WEB07 as complete commercial journeys remain **partial/blocked** by COM01/COM02/APP01, approved real policy/support/merchant/service/release inputs and user-operated purchase/restore observations. No active purchase links, customer release or publication was enabled. No earlier manual acceptance is inferred. Stop here for Josh's observations before WEB08 or separately scoped service work.

@@ -5,6 +5,12 @@ desktop nonfiction workspace. WEB01–WEB02 provide the branded homepage foundat
 Gather → Shape → Write story, illustrative workspaces and local-file ownership
 section. WEB03 adds a brief, once-per-load decorative settling sequence in Shape.
 WEB04 adds planned pricing, a Downloads page and shared release availability.
+WEB05 adds Help, FAQ, policy-review pages and build-time route metadata/social assets.
+Its public-content finalization is partial: seller, support, host/domain and approved
+policies are still missing. Policy pages are explicitly local review drafts.
+WEB06–WEB07 add plan selection, purchase/restore guidance and guarded future service
+links. Website preparation is implemented; actual purchase integration remains blocked
+by COM01/COM02/APP01. Owner-approved placeholders remain in the policy drafts.
 The product is presented as **in development for Mac and Windows**. Downloads and
 purchases are not enabled.
 
@@ -32,12 +38,12 @@ After code changes, run these commands in order:
 2. `npm run lint`
 3. `npm run typecheck`
 
-Fix all errors and warnings. Formatting targets authored source and root
+Fix all errors and warnings. Formatting targets authored source, `build-support/` and root
 configuration/documentation, with the npm lockfile excluded; it does not traverse
 dependencies, public license originals, binary assets or generated output. Inspect
 the scope again if vendor/generated or historical test files are later present.
 ESLint covers TS/TSX and root JS/CJS configuration, with zero warnings allowed.
-TypeScript checks both application and Vite configuration without emitting JS;
+TypeScript checks application, Vite configuration and production output code without emitting JS;
 incremental diagnostic caches stay under ignored `node_modules/.tmp/`.
 
 No tests, harnesses, fixtures, automated verification scripts, test CI, builds,
@@ -49,10 +55,15 @@ authorized by these checks. Documentation-only changes do not require them.
 - `src/components/site/` owns the header/footer and their styles.
 - `src/features/home/` owns the hero, product story, ownership section and
   illustrative workspaces. `example-project.ts` holds their shared invented content.
-- `src/features/access/` owns the pricing comparison; `src/content/offers.ts`
-  records the intended offers and unavailable purchase state.
+- `src/features/access/` owns pricing, the plan-selection panel and purchase help;
+  `src/content/offers.ts` records the intended offers.
+- `src/content/commerce.ts` owns purchase availability and future fixed service links.
 - `src/content/release.ts` owns release metadata and the download-availability gate.
-- `src/pages/` owns Downloads and basic missing-route recovery.
+- `src/pages/` owns Downloads, Help, Privacy, Terms, Purchases and missing-route recovery.
+- `src/content/faq.ts` owns the shared answers; Home shows four, Help shows all ten.
+- `src/content/site.ts` holds owner details and the explicit review/public setting.
+- `src/content/pages.ts` owns route metadata; `build-support/site-output.ts` supplies
+  HTML heads, crawler files and the social PNG during user-operated development/build.
 - `src/theme.ts` and `src/index.css` own the Mantine theme and global foundations.
 - [Asset provenance](src/assets/branding/README.md) records the unchanged approved
   artwork, favicon and local font files. The [font license](public/licenses/SourceSerif4-OFL.txt)
@@ -100,15 +111,118 @@ These guards check content shape and consistency; they do not authenticate signi
 prove an artifact is immutable, or replace owner approval. Use only reviewed public
 record references; never include credentials or private evidence in this frontend.
 Hero, pricing actions, header downloads and the Downloads page derive availability
-from the validated record. Paid purchasing remains independently unavailable.
+from the validated record. Paid purchasing has an independent approval gate and
+currently remains unavailable.
 There is no environment/query/local-storage switch to enable either feature.
 
-React Router 8.4.0 supplies declarative routes for `/`, `/downloads` and a minimal
-unknown-path recovery page. Navigation uses normal document/fragment links, retaining
-browser back/forward and opening in a new tab. Vite's existing SPA configuration is
-retained for local direct loads; the user must observe reload behavior. The eventual
-static host must serve the app for `/downloads` while preserving asset/license URLs.
-No host has been chosen or configured. WEB05/WEB08 still own delivered per-route
-metadata, final host route/status handling and public readiness. React-rendered tab
-titles are a convenience, not crawler-visible metadata completion; the HTML remains
-noindex with its development description.
+React Router 8.4.0 supplies `/`, `/downloads`, `/help`, `/privacy`, `/terms`, `/purchases`
+and unknown-path recovery. Navigation uses normal document/fragment links, retaining
+browser back/forward and opening in a new tab. Native details/summary disclosures
+provide FAQ keyboard/touch behavior; navigation stays visible and wraps on mobile.
+
+## Purchase preparation — WEB06 / WEB07
+
+Pricing links open `/purchases?plan=free|monthly|lifetime#plan`. The selected plan's
+rights, amount and next step appear in one panel; absent, unknown or repeated plan
+values show Free. Native links preserve reload/back/forward. Selecting a plan does
+not start a purchase, transfer a selection into the app or interpret a payment result.
+No modal, account registration, billing lookup, payment SDK or website storage is needed.
+The desktop already implements the Collie access/purchase controls described here;
+this work did not modify that checkout or the service.
+
+The current record is `{ status: 'unavailable' }`. The production presentation handles:
+
+| Prerequisites                          | Presentation                                                                                                                   |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| No accepted release or commerce        | Planned prices, Explore Collie, download availability and clearly future purchase instructions.                                |
+| Accepted release, commerce unavailable | Download free; paid plans remain unavailable. Restore help stays reachable.                                                    |
+| Accepted in-app route                  | Plan details lead to Purchase in the app, with a download path for newcomers and Settings → Collie access for installed users. |
+| Accepted standalone route              | Monthly/Lifetime continue to fixed service-owned `/buy/monthly` and `/buy/lifetime` pages. The in-app alternative remains.     |
+
+To configure a later accepted route, `commerceRecord` requires live environment,
+approved HTTPS `serviceOrigin`, exact accepted `releaseVersion`, and public references
+for `approvalRecord`, `directAcceptanceRecord` (COM01) and `desktopAcceptanceRecord`
+(APP01). Public-mode policy readiness and `siteDetails.purchasePrivacy` are also required.
+Standalone checkout additionally needs the implemented `website-purchase-v1` contract
+and `website.acceptanceRecord` (COM02); incomplete standalone evidence falls back to
+the independently accepted in-app path. Missing common evidence keeps both off.
+Review mode cannot display active checkout links. These guards check configuration;
+they do not authenticate evidence, discover outages or authorize publication/sales.
+Changing sales availability does not erase release metadata or existing purchase rights.
+
+Do not fill approval fields with placeholder evidence. Finalize draft copy, service
+behavior, owner approvals and user acceptance first. A free release may ship before
+commerce; pausing new sales must not disable the service's existing restore/management.
+No website-query, local-storage or sandbox bypass is provided.
+
+The [service handoff](purchase-service-handoff.md) specifies proposed entry paths,
+status/privacy/recovery behavior, migration obligations and current official Paddle
+references. It records the existing `_ptxn` payment-link incompatibility and repeated
+recovery-code replacement behavior. Service implementation and a real paid journey
+remain unfinished; this is not a working website shop.
+
+For local review, start the site yourself with `npm run dev`. From Pricing, explore
+each plan, switch selections, reload and use Back/Forward. Expect the corresponding
+rights/price with no Buy button or payment confirmation. Open Help's restore, payment
+problem and subscription-management topics; expect real app labels and working help
+links. Review at phone width, 200% zoom and with keyboard navigation. No payment or
+service setup is required for these local observations. Actual purchase, restore,
+provider and native-release acceptance remain separately authorized user work.
+
+## Review content and publication inputs
+
+`siteDetails` is intentionally empty. Add only owner-supplied public seller/contact,
+hosting/log/cookie/retention, contact-handling and refund information. Support remains
+unavailable until there is a genuine destination; there is no submission form.
+Privacy/Terms/Purchases show a local-review banner and draft footer labels. The
+existing purchase service's `pages.mjs` informed those drafts, not an invented seller
+or legal policy. Final seller/terms, jurisdiction/effective-date decisions, service
+and host data practices, retention/deletion, provider eligibility and support/refund
+handling must be reconciled and approved before public release. Edit the draft
+prose into its final form; merely filling configuration does not perform that review.
+`purchasePrivacy` holds the final service/provider, cookie/session and recovery-display
+data practices once approved; without it no paid route can become active.
+
+`publication.mode` remains `review`, without a canonical origin. Public-mode output
+is refused unless an HTTPS canonical origin, seller, valid support destination,
+hosting/contact privacy, refund terms and policy/publication approval records exist.
+These are owner records, not legal or hosting verification by this code. Noindex and
+robots controls are not access control: keep review output local, or use a separately
+authorized private preview host. Neither build output nor a boolean authorizes publication.
+
+## Static HTML and social output — user operated
+
+The Vite plugin transforms the HTML metadata boundary for development requests and
+emits route-specific HTML from Vite's processed root entry during a production build.
+It retains Vite's hashed JS/CSS references; no SSR service or metadata-only browser
+effect is used. Client-rendered title tags were removed so the delivered head owns
+each page's title, description, Open Graph and Twitter metadata.
+
+Output includes `index.html`, each named route's `index.html`, `404.html`,
+`robots.txt`, `sitemap.xml` and `social/collie-writer.png`. The PNG is rendered from
+the authored 1200×630 SVG template, unchanged approved mascot and bundled fonts by
+the pinned build-only `@resvg/resvg-js`; no external images/fonts are fetched.
+It is generated on demand in development and once in a production build. The
+assistant has not run either generator or inspected generated output.
+
+In review mode every page is noindex/nofollow, robots disallows crawling and the
+sitemap has no URLs. Draft policy titles/descriptions identify their status.
+Canonical and og:url tags are omitted until an approved origin exists; the review
+social-image URL is root-relative. With an approved origin it becomes absolute.
+Public output uses only the six named routes in its sitemap, never 404 or purchase
+service completion pages; 404 remains noindex and has no canonical URL.
+
+For your local output review, run `npm run build`, then `npm run preview`. Directly
+open/reload each page and inspect View Source (not only the Elements panel). Expect
+its own metadata and review indexing rules. Open `/social/collie-writer.png` to
+review the composition. These are user-operated steps, not assistant checks.
+
+No domain or host has been selected. Before publication, configure the chosen host
+to serve each known clean path from its matching directory index (including reloads),
+normalize trailing slashes consistently, and serve `404.html` with HTTP 404 for
+unknown paths. Do not rewrite every request to the home HTML: that would return
+the wrong metadata/status. Preserve asset/font/license/robots/sitemap URLs and
+their content types. Set HTTPS, caching, security headers and log/privacy practices
+for that actual host. Vite's dev/preview fallback is not evidence of production
+HTTP status behavior. Host-specific configuration and observations remain pending
+until a host is chosen; no deployment has occurred.

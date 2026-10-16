@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f5f4f0" />
+  <rect x="800" width="400" height="630" fill="#204438" />
+  <image x="72" y="60" width="72" height="72" href="data:image/png;base64,{{artwork}}" />
+  <g font-family="Source Serif 4" fill="#252d2b">
+    <text x="166" y="109" font-size="38" font-weight="700">Collie Writer.</text>
+    <text x="72" y="258" font-size="63">You’ve gathered</text>
+    <text x="72" y="333" font-size="63">the ideas.</text>
+    <text x="72" y="421" font-size="57" fill="#2f6757">Now give them a shape.</text>
+    <text x="72" y="551" font-size="24">{{availability}}</text>
+  </g>
+  <g font-family="Source Serif 4" fill="#fffefa">
+    <text x="852" y="139" font-size="30">Gather</text>
+    <path d="M852 170H1130" stroke="#6c917a" />
+    <text x="852" y="255" font-size="30">Shape</text>
+    <path d="M852 286H1130" stroke="#6c917a" />
+    <text x="852" y="371" font-size="30">Write</text>
+    <path d="M852 402H1130" stroke="#6c917a" />
+    <text x="852" y="530" font-size="23">A home for</text>
+    <text x="852" y="562" font-size="23">your nonfiction.</text>
+  </g>
+</svg>

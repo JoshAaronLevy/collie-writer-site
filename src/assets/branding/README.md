@@ -26,3 +26,12 @@ public-spaces content from `src/features/home/example-project.ts`. They are expl
 labeled as illustrative, are not captured app screenshots, and contain no private
 project material or real scholarly quotations. All website
 assets are local to this checkout; there is no runtime dependency on the desktop repo.
+
+WEB05 adds `social-card.svg`, an authored 1200×630 composition template. The
+production output plugin embeds the unchanged approved mascot at 72×72, resolves
+the availability line from the shared release record and rasterizes the template
+with the bundled Source Serif 4 faces. `@resvg/resvg-js` produces
+`social/collie-writer.png` during the user's build (or on a local dev request).
+There are no new generated mascots, altered originals, screenshots, endorsements
+or private project contents. The assistant did not run the build/render or inspect
+the resulting PNG; visual acceptance is pending the user's output review.

@@ -1,0 +1,16 @@
+.review-notice {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid #c9b879;
+  border-radius: 0.25rem;
+  background: #fff8e4;
+  color: #514728;
+}
+.review-notice strong {
+  display: block;
+  font-size: 0.9375rem;
+}
+.review-notice p {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
