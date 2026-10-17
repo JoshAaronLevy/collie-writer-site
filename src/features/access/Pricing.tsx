@@ -14,6 +14,14 @@ export default function Pricing() {
         Make room for more.
       </h2>
       <p className={styles['pricing-intro']}>{purchaseAvailability.notice}</p>
+      <div className={styles['ai-plan-note']}>
+        <p>
+          <strong>Planned AI: your ChatGPT allowance.</strong> No separate
+          Collie token bill. Plan limits and credit settings apply. These prices
+          are for Collie; customer AI access is not yet available.
+        </p>
+        <a href="/#ai-tools">How AI connects</a>
+      </div>
       <div className={styles['offer-list']}>
         {offers.map((offer) => (
           <article
@@ -28,7 +36,6 @@ export default function Pricing() {
             </p>
             <div className={styles['offer-copy']}>
               <p>{offer.summary}</p>
-              <p>{offer.detail}</p>
               <a
                 className={styles['offer-link']}
                 href={`/purchases?plan=${offer.id}#plan`}

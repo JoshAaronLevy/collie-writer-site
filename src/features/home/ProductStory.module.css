@@ -1,27 +1,11 @@
-.gather-section,
 .shape-content,
-.write-section,
 .ownership-content {
   width: min(var(--page-width), calc(100% - var(--page-gutter) * 2));
   margin-inline: auto;
   min-width: 0;
 }
 
-.gather-section,
-.write-section {
-  padding-block: clamp(3.5rem, 7vw, 6rem);
-}
-
-.gather-section {
-  border-top: 1px solid var(--color-rule);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(2rem, 6vw, 6rem);
-}
-
 .story-copy h2,
-.writing-heading h2,
 .ownership-copy h2 {
   font: 400 clamp(2.25rem, 3.5vw, 3.5rem) / 1.13 var(--font-editorial);
   letter-spacing: -0.04em;
@@ -37,7 +21,6 @@
 }
 
 .story-copy > p:not(.section-kicker),
-.writing-heading > p:not(.section-kicker),
 .ownership-copy > p:not(.section-kicker) {
   margin-top: 1.25rem;
   max-width: 32rem;
@@ -46,23 +29,8 @@
   line-height: 1.8;
 }
 
-.gather-figure,
 .plan-figure {
   min-width: 0;
-}
-
-.gather-collection {
-  display: grid;
-  gap: 1rem;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  background: #eeede5;
-}
-
-.collection-title {
-  color: var(--color-muted);
-  font-size: 0.8125rem;
-  padding-bottom: 0.25rem;
 }
 
 .material-card {
@@ -71,18 +39,6 @@
   background: var(--color-surface);
   border-radius: 0.25rem;
   box-shadow: 0 5px 12px -8px rgb(32 68 56 / 20%);
-}
-
-.gather-collection .material-card[data-kind='note'] {
-  margin-inline-end: 15%;
-  background: #fff8e4;
-}
-
-.gather-collection .material-card[data-kind='source'] {
-  margin-inline-start: 10%;
-}
-.gather-collection .material-card[data-kind='passage'] {
-  margin-inline-end: 5%;
 }
 
 .material-kind,
@@ -160,9 +116,6 @@
 .plan-material .material-card + .material-card {
   margin-top: 1rem;
 }
-.plan-material .material-origin {
-  display: none;
-}
 
 /* Paper edges are decorative; the cards and all readable text stay still. */
 .plan-material .material-card {
@@ -236,6 +189,27 @@
   font-size: 0.875rem;
 }
 
+.chapter-revision {
+  margin-bottom: 0.5rem;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+}
+
+.chapter-revision > span {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--color-green-dark);
+  font-weight: 600;
+}
+
+.planning-context {
+  max-width: 48rem;
+  margin: 1.5rem auto 0;
+  color: var(--color-muted);
+  font-size: 0.8125rem;
+  text-align: center;
+}
+
 .chapter-links {
   padding: 0;
   margin: 1rem 0 0;
@@ -249,22 +223,6 @@
 }
 .chapter-links li + li {
   margin-top: 0.5rem;
-}
-
-.writing-heading {
-  max-width: 44rem;
-  margin: 0 auto 2.5rem;
-  text-align: center;
-}
-.writing-heading > p:not(.section-kicker) {
-  max-width: 38rem;
-  margin-inline: auto;
-}
-.writing-footnote {
-  margin-top: 1.5rem;
-  color: var(--color-green);
-  text-align: center;
-  font: 400 1.25rem / 1.5 var(--font-editorial);
 }
 
 .ownership-section {
@@ -283,6 +241,12 @@
 }
 .ownership-copy > p:not(.section-kicker) {
   color: #e1e9df;
+}
+.ownership-copy a {
+  color: var(--color-sage);
+}
+.ownership-copy a:focus-visible {
+  outline-color: var(--color-sage);
 }
 
 .project-file {
@@ -329,6 +293,10 @@
     animation-delay: 80ms;
   }
 
+  .plan-board[data-settling] .material-card[data-kind='passage']::before {
+    animation-delay: 160ms;
+  }
+
   .plan-board[data-settling] .assignment-connection > span {
     animation: connection-settle 640ms 120ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
@@ -371,32 +339,10 @@
   }
 }
 
-@media (min-width: 62em) {
-  .gather-section > .story-copy {
-    grid-column: 2;
-    grid-row: 1;
-  }
-  .gather-figure {
-    grid-column: 1;
-    grid-row: 1;
-  }
-}
-
 @media (max-width: 62em) {
-  .gather-section,
   .shape-heading,
   .ownership-content {
     grid-template-columns: minmax(0, 1fr);
-  }
-  .gather-section > .story-copy,
-  .gather-figure {
-    grid-column: auto;
-    grid-row: auto;
-  }
-  .gather-figure {
-    max-width: 38rem;
-    width: 100%;
-    justify-self: center;
   }
   .shape-description {
     max-width: 38rem;
@@ -414,21 +360,12 @@
   .assignment-connection > span {
     transform: rotate(90deg);
   }
-  .assignment-connection br {
-    display: none;
-  }
   .project-file {
     max-width: 32rem;
   }
 }
 
 @media (max-width: 36em) {
-  .gather-collection {
-    padding: 1rem;
-  }
-  .gather-collection .material-card[data-kind] {
-    margin-inline: 0;
-  }
   .material-card {
     padding: 1rem;
   }
@@ -438,11 +375,19 @@
 }
 
 @media (forced-colors: active) {
+  .ownership-copy a:focus-visible {
+    outline-color: Highlight;
+  }
   .planned-chapters > li[data-selected='true'] {
     border: 2px solid Highlight;
   }
   .file-extension,
-  .project-file {
+  .project-file,
+  .plan-board,
+  .material-card,
+  .plan-material .material-card::before,
+  .planned-chapters > li,
+  .chapter-links li {
     border-color: CanvasText;
   }
 }

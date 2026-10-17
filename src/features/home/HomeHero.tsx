@@ -7,14 +7,14 @@ export default function HomeHero() {
   return (
     <section className={styles['home-hero']} aria-labelledby="hero-heading">
       <div className={styles['hero-copy']}>
-        <p className={styles['hero-eyebrow']}>A home for your nonfiction</p>
+        <p className={styles['hero-eyebrow']}>AI for thoughtful nonfiction</p>
         <h1 id="hero-heading" className={styles['hero-heading']}>
-          You’ve gathered the ideas.
-          <span>Now give them a shape.</span>
+          Research deeper.
+          <span>Write with conviction.</span>
         </h1>
         <p className={styles['hero-description']}>
-          Bring your research, notes and writing into one calm workspace. Turn
-          what you know into a book, article or essay.
+          Explore your sources, turn your ideas into a structure, and review the
+          strength of your writing, with AI alongside your work.
         </p>
         <Button
           component="a"
@@ -28,11 +28,9 @@ export default function HomeHero() {
         >
           {releaseAvailability.action.label}
         </Button>
-        {releaseAvailability.available ? (
-          <a className={styles['story-link']} href="/#how-it-works">
-            See how it works
-          </a>
-        ) : null}
+        <a className={styles['story-link']} href="/#ai-tools">
+          Explore the AI tools
+        </a>
         <p className={styles['development-notice']}>
           <span aria-hidden="true" />
           {releaseAvailability.notice}

@@ -4,8 +4,8 @@ import { purchaseAvailability } from './commerce.ts'
 export const pages = [
   {
     path: '/',
-    title: 'Collie Writer — A home for your nonfiction',
-    description: `Bring research, notes and writing into one calm nonfiction workspace. ${releaseAvailability.notice}.`,
+    title: 'Collie Writer — Research deeper. Write with conviction.',
+    description: `AI research, planning and substantive review for nonfiction. Your ChatGPT account, your local project. AI tools in development. ${releaseAvailability.notice}.`,
   },
   {
     path: '/downloads',
@@ -16,7 +16,7 @@ export const pages = [
     path: '/help',
     title: 'Help — Collie Writer',
     description:
-      'Getting started, saving and moving a Collie Writer project, imports, exports and practical answers about local work.',
+      'ChatGPT connection, AI usage and privacy, plus getting started, local projects, imports and exports in Collie Writer. Customer AI access is in development.',
   },
   {
     path: '/privacy',

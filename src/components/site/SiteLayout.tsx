@@ -25,8 +25,8 @@ export function SiteHeader() {
         </span>
       </a>
       <nav aria-label="Main navigation" className={styles['site-navigation']}>
-        <a href="/#how-it-works">
-          How it works <span aria-hidden="true">↗</span>
+        <a href="/#ai-tools">
+          AI tools <span aria-hidden="true">↗</span>
         </a>
         <a href="/#pricing">Pricing</a>
         <a

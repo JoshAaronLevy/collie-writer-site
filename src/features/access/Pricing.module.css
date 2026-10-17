@@ -29,6 +29,25 @@
   margin-top: 3rem;
   border-top: 1px solid var(--color-rule);
 }
+
+.ai-plan-note {
+  max-width: 44rem;
+  margin-top: 1.5rem;
+  border-inline-start: 3px solid var(--color-sage);
+  padding-inline-start: 1.25rem;
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+}
+
+.ai-plan-note strong {
+  color: var(--color-ink);
+}
+
+.ai-plan-note a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
 .offer-row {
   display: grid;
   grid-template-columns: minmax(0, 0.7fr) minmax(0, 0.8fr) minmax(0, 2fr);
@@ -47,11 +66,6 @@
   margin-top: 0.5rem;
   color: var(--color-muted);
   font: 400 0.875rem / 1.5 var(--font-body);
-}
-.offer-copy > p + p {
-  margin-top: 0.75rem;
-  color: var(--color-muted);
-  font-size: 0.875rem;
 }
 .offer-link {
   display: inline-flex;

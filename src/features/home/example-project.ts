@@ -4,11 +4,21 @@ export const exampleProject = {
   title: 'Why public spaces matter',
   filename: 'Why public spaces matter.collie',
   chapters: [
-    'A place to pause',
-    'Everyday encounters',
-    'Making room for everyone',
+    {
+      title: 'A place to pause',
+      purpose: 'Explore what makes a place inviting enough to stay.',
+    },
+    {
+      title: 'Everyday encounters',
+      purpose: 'Ask when sharing a space becomes a social connection.',
+    },
+    {
+      title: 'Making room for everyone',
+      purpose: 'Consider who feels welcome, and what still gets in the way.',
+    },
   ],
   selectedChapter: 'Everyday encounters',
+  suggestedChapterTitle: 'Places to meet',
   note: {
     title: 'A reason to stay',
     text: 'A bench gives someone a reason to stay.',

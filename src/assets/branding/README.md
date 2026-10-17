@@ -21,7 +21,7 @@ Adobe copyright and SIL Open Font License are in
 [`public/licenses/SourceSerif4-OFL.txt`](../../../public/licenses/SourceSerif4-OFL.txt)
 and linked in the website footer.
 
-The Gather, Plan and Write illustrations are authored HTML/CSS with shared invented
+The Research, Plan, Review and hero Write illustrations are authored HTML/CSS with shared invented
 public-spaces content from `src/features/home/example-project.ts`. They are explicitly
 labeled as illustrative, are not captured app screenshots, and contain no private
 project material or real scholarly quotations. All website
@@ -35,3 +35,7 @@ with the bundled Source Serif 4 faces. `@resvg/resvg-js` produces
 There are no new generated mascots, altered originals, screenshots, endorsements
 or private project contents. The assistant did not run the build/render or inspect
 the resulting PNG; visual acceptance is pending the user's output review.
+
+WAI05 updates only the social template's copy to Research / Structure / Review,
+the homepage headline and an explicit AI development label. The artwork and
+font assets are unchanged; the new output still awaits user visual review.

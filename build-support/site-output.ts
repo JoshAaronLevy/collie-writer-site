@@ -12,6 +12,8 @@ import {
 import { releaseAvailability } from '../src/content/release.ts'
 
 const socialPath = '/social/collie-writer.png'
+const socialAlt =
+  'Collie Writer. Research deeper. Write with conviction. Research, structure, review. AI tools in development.'
 const metadataBlock = /<!-- site-meta:start -->[\s\S]*?<!-- site-meta:end -->/
 const escape = (value: string) =>
   value.replace(
@@ -46,12 +48,12 @@ function metadata(path: string) {
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Collie Writer. A home for your nonfiction. Gather, shape, write." />
+    <meta property="og:image:alt" content="${escape(socialAlt)}" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escape(title)}" />
     <meta name="twitter:description" content="${escape(description)}" />
     <meta name="twitter:image" content="${escape(image)}" />
-    <meta name="twitter:image:alt" content="Collie Writer. A home for your nonfiction. Gather, shape, write." />
+    <meta name="twitter:image:alt" content="${escape(socialAlt)}" />
     <!-- site-meta:end -->`
 }
 

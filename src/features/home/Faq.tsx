@@ -4,7 +4,11 @@ import styles from './Faq.module.css'
 export default function Faq({ full = false }: { full?: boolean }) {
   const items = full
     ? faq
-    : faq.filter((item) => ['free', 'files', 'ai', 'moving'].includes(item.id))
+    : faq.filter((item) =>
+        ['files', 'ai', 'ai-usage', 'ai-history', 'ai-review'].includes(
+          item.id,
+        ),
+      )
   return (
     <section
       className={styles['faq-section']}

@@ -70,11 +70,25 @@ export default function Privacy() {
       <section>
         <h2>Optional AI</h2>
         <p>
-          AI is in development and is not currently offered to customers. A
-          future eligible route would require separate account/provider
-          disclosures: selected context sent for an AI request leaves the
-          device. Keeping a project locally is not a promise that all optional
-          network features operate offline.
+          Customer AI access is in development. The intended connection uses
+          your own ChatGPT account and separate permission to use your eligible
+          plan. Signing in does not import your ChatGPT history. Account
+          credentials remain device-local and are not part of a portable
+          project.
+        </p>
+        <p>
+          When you request AI help, your prompt and selected context go to the
+          provider. That context can include writing, source passages, notes and
+          conversation material. The marketing website does not receive it or
+          run AI requests. Local writing and organization remain available
+          without AI; provider requests require a network connection.
+        </p>
+        <p>
+          Provider/account data handling, retention and deletion disclosures
+          still require review before customer access. This draft does not
+          promise a retention period or make a training-use claim. See{' '}
+          <a href="/help#ai-help">AI and ChatGPT help</a> for the planned
+          connection and usage model.
         </p>
       </section>
       <section>

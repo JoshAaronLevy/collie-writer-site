@@ -15,9 +15,9 @@ export const faq = [
   },
   {
     id: 'offline',
-    question: 'Can I work offline?',
+    question: 'Can I write without AI or an internet connection?',
     answer:
-      'Writing and organizing local material do not require an AI account or a network connection. Purchase and update actions are separate. Monthly paid access uses the verified paid period plus up to 14 days of signed offline grace; go online and refresh access for renewals or changes. Cached lifetime access works offline, subject to authentic revocation.',
+      'Yes. Local writing, planning, research organization and export work without an AI account or network connection. AI requests need a connection. Purchase and update actions are separate. Monthly paid access uses the verified paid period plus up to 14 days of signed offline grace; go online and refresh access for renewals or changes. Cached lifetime access works offline, subject to authentic revocation.',
   },
   {
     id: 'files',
@@ -33,9 +33,39 @@ export const faq = [
   },
   {
     id: 'ai',
-    question: 'Is AI included?',
+    question: 'Do I need an API key?',
     answer:
-      'Optional AI is in development and is not currently offered to customers or included in the paid benefits. Local writing stands on its own. Any future eligible AI route would need its own account and network disclosures; selected context sent to a provider is separate from keeping the project locally.',
+      'No. The planned connection uses your existing eligible ChatGPT account: sign in through OpenAI and separately allow plan use in Collie. No developer account or API key setup is needed. Customer AI access is not available yet; eligibility and participating-app approval are required.',
+  },
+  {
+    id: 'ai-usage',
+    question: 'How is AI usage paid for?',
+    answer:
+      'The planned tools use eligible usage from your ChatGPT plan or available credits. Collie adds no separate AI token bill or extra allowance. Your ChatGPT limits apply; credit settings may allow purchased credits after included usage runs out. Review app usage, limits and credit settings in ChatGPT Settings → Usage. Collie’s license is separate: a ChatGPT subscription does not purchase Collie.',
+  },
+  {
+    id: 'ai-history',
+    question: 'Does signing in import my ChatGPT history?',
+    answer:
+      'No. Bring the conversations you want into your project through supported import, then accept the material you want to keep. Signing in does not import your conversations or memories. Planning uses selected project material within analysis limits.',
+  },
+  {
+    id: 'ai-review',
+    question: 'How is the proofreader different?',
+    answer:
+      'The planned reviewer goes beyond spelling and grammar: source faithfulness, citation gaps, which sources appear where and how often, repeated arguments, clarity and flow. It needs relevant source text and context, and cannot certify accuracy or catch every issue. You review the findings and decide what to change. Advanced proofreading is not available yet.',
+  },
+  {
+    id: 'ai-control',
+    question: 'Will AI change my writing automatically?',
+    answer:
+      'No. Planning proposals are editable before you choose Use outline. Drafting assistance offers a preview before explicit insertion or replacement. The planned proofreader presents findings for review; it does not silently rewrite your manuscript, add citations or change the outline. Customer AI access remains in development.',
+  },
+  {
+    id: 'ai-privacy',
+    question: 'What leaves my computer when I use AI?',
+    answer:
+      'When you request AI help, your prompt and the selected context needed for that request go to the provider. This can include writing, research passages, notes and conversation material. Local project storage does not make AI offline. The marketing website does not receive your project or run AI requests. Provider data-handling disclosures must be finalized before customer AI access is offered.',
   },
   {
     id: 'import',

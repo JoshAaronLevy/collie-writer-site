@@ -14,6 +14,21 @@ by COM01/COM02/APP01. Owner-approved placeholders remain in the policy drafts.
 The product is presented as **in development for Mac and Windows**. Downloads and
 purchases are not enabled.
 
+The October 16 WAI revision puts AI research, planning and substantive review at
+the center of the intended product story. WAI01 adds the hero and ChatGPT plan
+introduction, with customer AI availability still explicitly in development.
+WAI02 replaces Gather with a research conversation and linked source excerpt,
+using the same invented project and a clearly distinguished next research lead.
+WAI03 develops Shape into an AI planning presentation: selected conversations,
+notes and sources inform a proposal, the writer revises a chapter title, and the
+same outline continues into the hero's Write illustration. WAI04 replaces the
+duplicate Write showcase with planned substantive proofreading: source comparison,
+a suggested revision, citation/source-use coverage and a repetition example.
+WAI05 reconciles the feature story, AI FAQs, Help/Privacy, pricing context and
+metadata/social copy. Feature links replace the repeated introduction summaries;
+purchase details remain on the plan pages. All WAI stages are implemented,
+awaiting user testing. Customer AI, public releases and commerce remain unavailable.
+
 See [website-implementation-plan.md](website-implementation-plan.md) for the eight
 stages, current status and user-owned acceptance guide. Implement one requested
 stage at a time. Website work does not authorize desktop/service changes or publication.
@@ -55,12 +70,19 @@ authorized by these checks. Documentation-only changes do not require them.
 - `src/components/site/` owns the header/footer and their styles.
 - `src/features/home/` owns the hero, product story, ownership section and
   illustrative workspaces. `example-project.ts` holds their shared invented content.
+  `AiIntroduction.tsx` owns the static ChatGPT connection/allowance explanation
+  and brief introduction to the three planned AI tools.
+  `ResearchStory.tsx` owns the research feature copy and static conversation/source
+  example; its source link navigates to the illustrated excerpt, without AI calls.
+  `ReviewStory.tsx` owns the planned proofreading presentation, source comparison
+  and native repetition disclosure. The hero retains the writing workspace.
 - `src/features/access/` owns pricing, the plan-selection panel and purchase help;
   `src/content/offers.ts` records the intended offers.
 - `src/content/commerce.ts` owns purchase availability and future fixed service links.
 - `src/content/release.ts` owns release metadata and the download-availability gate.
 - `src/pages/` owns Downloads, Help, Privacy, Terms, Purchases and missing-route recovery.
-- `src/content/faq.ts` owns the shared answers; Home shows four, Help shows all ten.
+- `src/content/faq.ts` owns the shared answers; Home shows five focused questions,
+  Help shows all fifteen, including AI usage, history, review, author control and privacy.
 - `src/content/site.ts` holds owner details and the explicit review/public setting.
 - `src/content/pages.ts` owns route metadata; `build-support/site-output.ts` supplies
   HTML heads, crawler files and the social PNG during user-operated development/build.

@@ -234,86 +234,6 @@
   font-size: 0.75rem;
 }
 
-.source-origin {
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--color-rule);
-  color: var(--color-muted);
-  font-size: 0.75rem;
-  overflow-wrap: anywhere;
-}
-
-.workspace-figure[data-view='writing'] {
-  max-width: none;
-}
-
-.workspace-figure[data-view='writing'] .workspace-scene {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 17rem;
-  gap: 1.5rem;
-  align-items: start;
-  padding: clamp(1rem, 2.5vw, 2rem);
-  border: 1px solid var(--color-rule);
-  border-radius: 0.75rem;
-  background: #eaede4;
-}
-
-.workspace-figure[data-view='writing'] .workspace-scene::before {
-  display: none;
-}
-.workspace-figure[data-view='writing'] .workspace-window {
-  margin: 0;
-}
-.workspace-figure[data-view='writing'] .workspace-body {
-  grid-template-columns: minmax(0, 0.65fr) minmax(0, 2fr);
-}
-.workspace-figure[data-view='writing'] .manuscript {
-  padding: clamp(1.5rem, 3vw, 3rem);
-}
-.workspace-figure[data-view='writing'] .manuscript-title {
-  font-size: clamp(1.75rem, 3vw, 2.75rem);
-}
-.workspace-figure[data-view='writing']
-  .manuscript
-  > p:not(.chapter-kicker, .manuscript-context) {
-  font-size: 1.125rem;
-  line-height: 1.85;
-}
-.workspace-figure[data-view='writing'] .chapter-material {
-  width: 100%;
-  margin: 0;
-  padding: 1.25rem;
-}
-.workspace-figure[data-view='writing'] .material-items {
-  grid-template-columns: minmax(0, 1fr);
-  gap: 1.5rem;
-}
-.workspace-figure[data-view='writing'] .linked-note,
-.workspace-figure[data-view='writing'] .linked-source {
-  font-size: 0.9375rem;
-}
-.workspace-figure[data-view='writing'] .material-heading > p {
-  font-size: 0.9375rem;
-}
-.workspace-figure[data-view='writing'] .material-heading > span,
-.workspace-figure[data-view='writing'] .material-type,
-.workspace-figure[data-view='writing'] .panel-label,
-.workspace-figure[data-view='writing'] .chapter-kicker {
-  font-size: 0.75rem;
-}
-.workspace-figure[data-view='writing'] .chapter-list {
-  font-size: 0.875rem;
-}
-
-@media (max-width: 75em) {
-  .workspace-figure[data-view='writing'] .workspace-scene {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .workspace-figure[data-view='writing'] .material-items {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  }
-}
-
 @media (max-width: 62em) {
   .manuscript {
     padding: 2rem;
@@ -327,13 +247,6 @@
 }
 
 @media (max-width: 36em) {
-  .workspace-figure[data-view='writing'] .workspace-body,
-  .workspace-figure[data-view='writing'] .material-items {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .workspace-figure[data-view='writing'] .manuscript {
-    padding: 1.25rem;
-  }
   .workspace-scene {
     padding-block: 0.75rem;
   }

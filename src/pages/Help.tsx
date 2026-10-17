@@ -13,6 +13,7 @@ export default function Help() {
     >
       <nav aria-label="Help topics">
         <a href="#getting-started">Getting started</a>
+        <a href="#ai-help">AI and ChatGPT</a>
         <a href="#save-open">Save and Open</a>
         <a href="#moving">Moving a project</a>
         <a href="#restore">Restore a purchase</a>
@@ -42,6 +43,31 @@ export default function Help() {
         <p>
           <a href="/downloads">Check download availability</a> before looking
           for an installer.
+        </p>
+      </section>
+      <section aria-labelledby="ai-help">
+        <h2 id="ai-help" tabIndex={-1}>
+          AI and your ChatGPT account
+        </h2>
+        <p>
+          Customer AI access is in development; advanced proofreading is
+          planned. The intended connection happens in the desktop app: sign in
+          through OpenAI, then allow eligible ChatGPT plan use. No API keys or
+          separate Collie token bill. Collie pricing is separate.
+        </p>
+        <p>
+          In participating apps, plan use counts toward your existing allowance.
+          ChatGPT Settings → Usage lets you review app usage, limits and credit
+          settings. See{' '}
+          <a href="https://learn.chatgpt.com/docs/sign-in-with-chatgpt">
+            OpenAI’s sign-in and usage guide
+          </a>{' '}
+          for current account controls.
+        </p>
+        <p>
+          <a href="/#ai-tools">Explore Collie’s planned AI tools</a> or read the
+          questions below about importing history, reviewing suggestions and
+          sending selected context to the provider.
         </p>
       </section>
       <section aria-labelledby="save-open">

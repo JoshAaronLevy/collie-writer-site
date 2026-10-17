@@ -3,19 +3,10 @@ import { useId } from 'react'
 import { exampleProject } from './example-project'
 import styles from './WorkspaceIllustration.module.css'
 
-export default function WorkspaceIllustration({
-  view = 'overview',
-}: {
-  view?: 'overview' | 'writing'
-}) {
+export default function WorkspaceIllustration() {
   const captionId = useId()
-  const ChapterHeading = view === 'writing' ? 'h3' : 'h2'
   return (
-    <figure
-      className={styles['workspace-figure']}
-      aria-labelledby={captionId}
-      data-view={view}
-    >
+    <figure className={styles['workspace-figure']} aria-labelledby={captionId}>
       <div className={styles['workspace-scene']}>
         <Paper className={styles['workspace-window']}>
           <div className={styles['workspace-titlebar']}>
@@ -37,9 +28,9 @@ export default function WorkspaceIllustration({
               <ol className={styles['chapter-list']}>
                 {exampleProject.chapters.map((chapter, index) => (
                   <li
-                    key={chapter}
+                    key={chapter.title}
                     className={
-                      chapter === exampleProject.selectedChapter
+                      chapter.title === exampleProject.selectedChapter
                         ? styles['selected-chapter']
                         : undefined
                     }
@@ -50,10 +41,10 @@ export default function WorkspaceIllustration({
                     >
                       0{index + 1}
                     </span>
-                    {chapter === exampleProject.selectedChapter ? (
-                      <strong>{chapter}</strong>
+                    {chapter.title === exampleProject.selectedChapter ? (
+                      <strong>{chapter.title}</strong>
                     ) : (
-                      chapter
+                      chapter.title
                     )}
                   </li>
                 ))}
@@ -63,22 +54,15 @@ export default function WorkspaceIllustration({
 
             <div className={styles['manuscript']}>
               <p className={styles['chapter-kicker']}>Chapter 02</p>
-              <ChapterHeading className={styles['manuscript-title']}>
+              <h2 className={styles['manuscript-title']}>
                 {exampleProject.selectedChapter}
-              </ChapterHeading>
+              </h2>
               <p>{exampleProject.opening}</p>
               <p>
                 A bench gives someone <mark>a reason to stay</mark>. And staying
                 makes room for the small encounters that turn a place into a
                 shared part of our lives.
               </p>
-              {view === 'writing' ? (
-                <p>
-                  In the square, shaded seating sits beside a walking route. The
-                  path brings people through; the seats offer a pause. What
-                  happens in that space between passing and staying?
-                </p>
-              ) : null}
               <div className={styles['manuscript-rule']} aria-hidden="true" />
               <p className={styles['manuscript-context']}>
                 Your writing, with its thinking close by.
@@ -102,11 +86,6 @@ export default function WorkspaceIllustration({
                 Source excerpt · example
               </p>
               <p>{exampleProject.source.text}</p>
-              {view === 'writing' ? (
-                <p className={styles['source-origin']}>
-                  {exampleProject.source.origin}
-                </p>
-              ) : null}
             </div>
           </div>
         </Paper>
