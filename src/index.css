@@ -26,7 +26,7 @@
   --color-green-dark: #204438;
   --color-sage: #c8e2d2;
   --color-rule: #d8ddd4;
-  --page-width: 80rem;
+  --page-width: 80vw;
   --page-gutter: clamp(1.25rem, 4vw, 4rem);
   --mantine-color-body: var(--color-paper);
   --mantine-color-text: var(--color-ink);

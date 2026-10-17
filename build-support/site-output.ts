@@ -13,7 +13,7 @@ import { releaseAvailability } from '../src/content/release.ts'
 
 const socialPath = '/social/collie-writer.png'
 const socialAlt =
-  'Collie Writer. Research deeper. Write with conviction. Research, structure, review. AI tools in development.'
+  'Collie Writer. Research deeper. Write with conviction. Research, structure, review. AI tools.'
 const metadataBlock = /<!-- site-meta:start -->[\s\S]*?<!-- site-meta:end -->/
 const escape = (value: string) =>
   value.replace(

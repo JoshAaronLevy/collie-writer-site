@@ -50,8 +50,7 @@ export default function Help() {
           AI and your ChatGPT account
         </h2>
         <p>
-          Customer AI access is in development; advanced proofreading is
-          planned. The intended connection happens in the desktop app: sign in
+          The connection happens in the desktop app: sign in
           through OpenAI, then allow eligible ChatGPT plan use. No API keys or
           separate Collie token bill. Collie pricing is separate.
         </p>

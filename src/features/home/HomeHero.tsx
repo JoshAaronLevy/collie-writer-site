@@ -7,7 +7,7 @@ export default function HomeHero() {
   return (
     <section className={styles['home-hero']} aria-labelledby="hero-heading">
       <div className={styles['hero-copy']}>
-        <p className={styles['hero-eyebrow']}>AI for thoughtful nonfiction</p>
+        {/* <p className={styles['hero-eyebrow']}>AI for thoughtful nonfiction</p> */}
         <h1 id="hero-heading" className={styles['hero-heading']}>
           Research deeper.
           <span>Write with conviction.</span>
@@ -20,21 +20,12 @@ export default function HomeHero() {
           component="a"
           href={releaseAvailability.action.href}
           className={styles['explore-link']}
-          rightSection={
-            <span aria-hidden="true">
-              {releaseAvailability.available ? '↗' : '↓'}
-            </span>
-          }
         >
           {releaseAvailability.action.label}
         </Button>
         <a className={styles['story-link']} href="/#ai-tools">
           Explore the AI tools
         </a>
-        <p className={styles['development-notice']}>
-          <span aria-hidden="true" />
-          {releaseAvailability.notice}
-        </p>
       </div>
       <WorkspaceIllustration />
     </section>

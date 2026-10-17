@@ -43,6 +43,9 @@
 }
 
 .explore-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 3.25rem;
   height: auto;
   padding-block: 0.75rem;

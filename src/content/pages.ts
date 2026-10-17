@@ -5,7 +5,7 @@ export const pages = [
   {
     path: '/',
     title: 'Collie Writer — Research deeper. Write with conviction.',
-    description: `AI research, planning and substantive review for nonfiction. Your ChatGPT account, your local project. AI tools in development. ${releaseAvailability.notice}.`,
+    description: `AI research, planning and substantive review for nonfiction. Your ChatGPT account, your local project. ${releaseAvailability.notice}.`,
   },
   {
     path: '/downloads',
@@ -16,7 +16,7 @@ export const pages = [
     path: '/help',
     title: 'Help — Collie Writer',
     description:
-      'ChatGPT connection, AI usage and privacy, plus getting started, local projects, imports and exports in Collie Writer. Customer AI access is in development.',
+      'ChatGPT connection, AI usage and privacy, plus getting started, local projects, imports and exports in Collie Writer.',
   },
   {
     path: '/privacy',

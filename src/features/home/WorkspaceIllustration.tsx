@@ -90,9 +90,6 @@ export default function WorkspaceIllustration() {
           </div>
         </Paper>
       </div>
-      <figcaption id={captionId} className={styles['workspace-caption']}>
-        Illustrative workspace · example content
-      </figcaption>
     </figure>
   )
 }

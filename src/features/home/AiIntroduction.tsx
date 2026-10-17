@@ -5,9 +5,6 @@ export default function AiIntroduction() {
     <section className={styles['ai-introduction']} aria-labelledby="ai-tools">
       <div className={styles['connection-story']}>
         <div>
-          <p className={styles['development-label']}>
-            AI tools · In development
-          </p>
           <h2 id="ai-tools" tabIndex={-1}>
             Your ChatGPT plan.
             <span>Put to work.</span>

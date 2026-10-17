@@ -70,7 +70,7 @@ export default function Privacy() {
       <section>
         <h2>Optional AI</h2>
         <p>
-          Customer AI access is in development. The intended connection uses
+          The intended connection uses
           your own ChatGPT account and separate permission to use your eligible
           plan. Signing in does not import your ChatGPT history. Account
           credentials remain device-local and are not part of a portable

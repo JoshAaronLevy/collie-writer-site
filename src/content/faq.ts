@@ -59,7 +59,7 @@ export const faq = [
     id: 'ai-control',
     question: 'Will AI change my writing automatically?',
     answer:
-      'No. Planning proposals are editable before you choose Use outline. Drafting assistance offers a preview before explicit insertion or replacement. The planned proofreader presents findings for review; it does not silently rewrite your manuscript, add citations or change the outline. Customer AI access remains in development.',
+      'No. Planning proposals are editable before you choose Use outline. Drafting assistance offers a preview before explicit insertion or replacement. The planned proofreader presents findings for review; it does not silently rewrite your manuscript, add citations or change the outline. AI tools assist but do not override your decisions.',
   },
   {
     id: 'ai-privacy',
