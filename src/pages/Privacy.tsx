@@ -70,11 +70,10 @@ export default function Privacy() {
       <section>
         <h2>Optional AI</h2>
         <p>
-          The intended connection uses
-          your own ChatGPT account and separate permission to use your eligible
-          plan. Signing in does not import your ChatGPT history. Account
-          credentials remain device-local and are not part of a portable
-          project.
+          The intended connection uses your own ChatGPT account and separate
+          permission to use your eligible plan. Signing in does not import your
+          ChatGPT history. Account credentials remain device-local and are not
+          part of a portable project.
         </p>
         <p>
           When you request AI help, your prompt and selected context go to the

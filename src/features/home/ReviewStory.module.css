@@ -1,36 +1,3 @@
-.review-section {
-  width: min(var(--page-width), calc(100% - var(--page-gutter) * 2));
-  margin-inline: auto;
-  padding-block: clamp(3.5rem, 7vw, 6rem);
-}
-
-.review-heading {
-  max-width: 44rem;
-  margin: 0 auto 2.5rem;
-  text-align: center;
-}
-
-.section-kicker {
-  margin-bottom: 1.25rem;
-  color: var(--color-green);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.review-heading h2 {
-  font: 400 clamp(2.25rem, 3.5vw, 3.5rem) / 1.13 var(--font-editorial);
-  letter-spacing: -0.04em;
-}
-
-.review-heading > p:last-child {
-  margin-top: 1.25rem;
-  color: var(--color-muted);
-  font-size: 1.0625rem;
-  line-height: 1.8;
-}
-
 .review-example {
   border: 1px solid var(--color-rule);
   border-radius: 0.625rem;
@@ -72,7 +39,7 @@
   font-size: 0.8125rem;
 }
 
-.review-section blockquote {
+.review-details blockquote {
   margin: 0.75rem 0;
   font: 400 clamp(1.125rem, 2vw, 1.375rem) / 1.65 var(--font-editorial);
 }
@@ -118,19 +85,21 @@
 
 .review-capabilities {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 2rem;
   margin: 2.5rem 0;
   padding: 0;
   list-style: none;
 }
 
-.review-capabilities h3 {
+.review-capabilities h3,
+.repetition-introduction h3 {
   margin-bottom: 0.75rem;
   font: 400 1.5rem / 1.3 var(--font-editorial);
 }
 
-.review-capabilities p {
+.review-capabilities p,
+.repetition-introduction p {
   color: var(--color-muted);
   font-size: 0.9375rem;
   line-height: 1.75;
@@ -140,10 +109,9 @@
   border-block: 1px solid var(--color-rule);
 }
 
-.repetition-example summary {
+.repetition-example > h3 {
   padding: 1.25rem 0.25rem;
   color: var(--color-green-dark);
-  cursor: pointer;
   font-weight: 600;
 }
 
@@ -183,4 +151,8 @@
   .draft-passage mark {
     text-decoration-color: CanvasText;
   }
+}
+
+.repetition-introduction {
+  margin-bottom: 1.5rem;
 }

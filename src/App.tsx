@@ -1,9 +1,7 @@
 import { MantineProvider } from '@mantine/core'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import { SiteFooter, SiteHeader } from './components/site/SiteLayout'
-import HomeHero from './features/home/HomeHero'
-import AiIntroduction from './features/home/AiIntroduction'
-import ProductStory from './features/home/ProductStory'
+import HomeSequence from './features/home/HomeSequence'
 import Pricing from './features/access/Pricing'
 import Downloads from './pages/Downloads'
 import NotFound from './pages/NotFound'
@@ -28,9 +26,7 @@ export default function App() {
               path="/"
               element={
                 <>
-                  <HomeHero />
-                  <AiIntroduction />
-                  <ProductStory />
+                  <HomeSequence />
                   <Pricing />
                   <Faq />
                 </>

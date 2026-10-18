@@ -3,7 +3,8 @@
 A Vite + React + TypeScript + Mantine marketing website for Collie Writer, a
 desktop nonfiction workspace. WEB01–WEB02 provide the branded homepage foundation,
 Gather → Shape → Write story, illustrative workspaces and local-file ownership
-section. WEB03 adds a brief, once-per-load decorative settling sequence in Shape.
+section. WEB03 originally added decorative settling in Shape; UX02 retires it
+for the static full-height layout.
 WEB04 adds planned pricing, a Downloads page and shared release availability.
 WEB05 adds Help, FAQ, policy-review pages and build-time route metadata/social assets.
 Its public-content finalization is partial: seller, support, host/domain and approved
@@ -71,7 +72,7 @@ authorized by these checks. Documentation-only changes do not require them.
 - `src/features/home/` owns the hero, product story, ownership section and
   illustrative workspaces. `example-project.ts` holds their shared invented content.
   `AiIntroduction.tsx` owns the static ChatGPT connection/allowance explanation
-  and brief introduction to the three planned AI tools.
+  and direct shortcuts to the three planned AI tools and file ownership.
   `ResearchStory.tsx` owns the research feature copy and static conversation/source
   example; its source link navigates to the illustrated excerpt, without AI calls.
   `ReviewStory.tsx` owns the planned proofreading presentation, source comparison
@@ -95,22 +96,127 @@ Illustrative text is invented presentation content, not an app screenshot or rea
 research. The static page performs no content uploads, checkout or AI requests.
 Assets are site-owned copies; no sibling checkout is needed at runtime.
 
-## Motion
+## Homepage layout and navigation
 
-`use-shape-motion.ts` observes only the Shape board. On a wide screen with motion
-allowed, decorative paper edges settle toward a connection/chapter accent sequence;
-all text stays stationary. CSS owns the finite animation. The observer, media and
-visibility listeners retire after one second, or sooner on leaving view, hiding the
-tab or changing the motion/display preference. There are no scroll listeners,
-per-frame React updates or animation dependencies.
+UX02 provides six full-height presentations: Hero, ChatGPT introduction,
+Research, Structure, Review, and Ownership. `HomeSequence` measures the scrolling
+header so it shares the first viewport with the hero. `FeatureSection` uses viewport
+minimum heights and natural overflow, with alternating paper/sage surfaces.
+The existing copy and detailed examples are retained. UX05 gives the four core
+features layered Learn more reveals with explicit Back to overview controls.
+Details remain open while browsing this homepage. Leaving the homepage ends that
+state. Hero actions and all four introduction shortcuts remain directly available.
 
-Narrow screens (62em or less), reduced motion and forced colors retain a complete
-static composition. Missing observer/media-query support also leaves everything
-visible. If a visit starts static or an effect is interrupted, it stays static for
-that mount; reload at a wide size with motion allowed to see the sequence. Native
-smooth anchor scrolling is enabled only on wide screens with motion allowed;
-reduced-motion and narrow layouts use ordinary anchor jumps. Browser support may
-leave anchors instantaneous. Actual motion and navigation acceptance is user-owned.
+The homepage resolves section and source/page fragments after mounting, opens
+the relevant detail layer and selected page before locating a hidden destination,
+and handles repeated same-fragment links. Section shortcuts
+locate the active presentation at its section boundary; source links locate the
+source itself with clearance for the local return toolbar. Explicit feature
+navigation is immediate after the presentation update. Pending alignment yields
+to newer input, focus elsewhere, another click or a hidden/unfocused document;
+a delayed hash event cannot restart an interrupted alignment. Back/Forward leave
+scroll restoration to the browser.
+Pricing/FAQ and supporting routes retain their existing navigation behavior.
+
+UX03 adds once-per-visit entry choreography through `section-entry.ts` and the
+shared section CSS. Only ready, offscreen, viewport-fitting summaries wait for
+entry; about 60% visibility starts the coordinated headline, copy, illustration,
+and action groups. The nominal sequence lasts 580ms, with an 800ms completion
+fallback. A fresh fitting hero uses a short, fully opaque entrance so its text,
+actions and header never disappear. Entry only changes transforms and opacity;
+it does not scroll the page or change focus.
+
+Focus, pointer/keyboard activation and deliberate fragment navigation immediately
+settle the relevant section. Departures, geometry changes, opened details and
+animation cancellation also resolve to readable content. Reduced motion, forced
+colors, oversized sections, restored visits and missing enhancement APIs use the
+static path. Preference changes or a hidden tab settle the visit, and reversing a
+preference does not re-arm it. Observers, listeners and completion timers are
+released on homepage unmount. CSS itself keeps content visible for reduced motion,
+forced colors and focused sections.
+
+UX04 adds optional near-boundary settling through `section-settling.ts`, using
+`section-geometry.ts` for the same viewport and header-plus-hero measurements as
+entry. A dominant, fitting summary can align only within 10% of its boundary after
+a user scroll episode completes. The controller prefers document `scrollend`,
+requires 200ms without input/movement, and samples a stable position twice. Without
+`scrollend`, the quiet/stable-position fallback applies. Ambiguous input leaves
+ordinary scrolling alone; a correction uses a cancellable 280ms ease-out.
+
+Departure protection persists across small gestures and pauses. A section aligned
+at the beginning of an episode stays excluded while the visitor leaves it; merely
+passing through alignment during a continuous gesture is not treated as departure.
+Approaching again from outside its capture band, deliberately reversing toward it,
+or selecting its navigation link re-arms it. New input immediately cancels a
+pending/running correction. The controller's own writes never create another
+scroll episode. Each frame explicitly uses instant scrolling, bypassing the global
+smooth-anchor CSS without changing the site's normal anchor behavior.
+
+Initial load, navigation/restoration, focus-driven scroll, text selection, held
+input, visible focused controls, open dominant details, oversized content, reduced
+motion, forced colors, pinch zoom and changing viewport/layout geometry exclude
+settling. An open offscreen detail panel does not block a newly dominant summary.
+Wheel, touch, scrollbar and keyboard behavior remain native; when the browser does
+not expose enough input origin/completion information, no correction is attempted.
+Leaving the homepage clears listeners, observers, timers and animation frames.
+
+UX05's `use-feature-reveal.ts` owns each feature's Summary → Revealing → Detail →
+Returning state. The colored overview sheet moves aside over 450ms, with a 650ms
+completion fallback and restrained detail arrival. The active layer alone is
+available to keyboard and assistive technology; each presentation has its own
+heading and the section is named by the active one. Explicit opening moves focus
+into details, and closing returns to Learn more. Interruption resolves the state
+without delayed focus movement after the visitor scrolls or moves focus elsewhere.
+Reduced motion, forced colors and missing motion APIs use immediate changes.
+
+Details retain natural document height, with a local sticky Back to overview
+control and a second return at the bottom. Closing from deep within a detail view
+explicitly restores its overview. Escape closes only within that feature and
+respects descendant interactions. Navigation resolves in-progress reveals before
+locating the active heading or a source; opening/closing adds no history entries.
+Entry/settling controllers observe reveal state, excluding an active detail view
+without disabling another dominant summary. Timers, animations and listeners are
+released on completion or unmount.
+
+UX06's `FeatureDetails.tsx` divides Research into two pages, Structure into two,
+and Review into three. Ownership remains one view without pagination controls.
+Native horizontal scrolling and CSS snap provide touch/trackpad browsing; no input
+handler converts vertical wheel movement or prevents vertical pan/pinch zoom.
+Previous/Next stay outside the scrolling content, with names, page counts and
+focusable unavailable endpoints. Button/fragment changes are immediate, including
+reduced motion. There is no autoplay, loop or custom slide animation. Browsers
+without inert or horizontal snap support get static button-selected pages.
+
+Each page is named by its existing content; only the selected page is available
+to keyboard and assistive technology. User page changes have a short polite
+announcement. Outgoing page focus moves outside that page before deactivation;
+Previous/Next retain focus on their control. Content reserves the tallest page's
+natural height and controls reserve their longest title's height, avoiding jumps
+between pages without clipping tall content or adding a vertical slide scroller.
+Shorter pages consequently leave some reserved space, especially at narrow widths.
+
+UX07 reconciles the integrated behavior and documentation. Pending carousel
+realignment yields to a newly started native gesture, including input that finishes
+a reveal. Detail links and keyboard-focused controls use the measured local return
+toolbar clearance. The old outer/nested feature-disclosure navigation path is
+retired; FAQ and purchase-help disclosures remain native outside this sequence.
+
+Selection survives close/reopen and scrolling elsewhere, and ends on homepage
+unmount. Detail/source fragments select their owning page before focus/alignment;
+section shortcuts keep the selected page. Resize preserves selection without a
+vertical correction. Existing captions/qualifications remain shared across their
+pages. Review's repetition example is directly visible on its dedicated page,
+without a second disclosure. Pagination does not add history entries. Touch feel,
+focus announcements, tall-page spacing and browser restoration await user review.
+
+The old Structure motion hook remains retired. Existing global smooth anchors
+outside the six-section navigation still apply only on wide screens with motion
+allowed. Layout, scroll feel, motion comfort, focus and browser restoration await
+user-owned observation; format/lint/typecheck do not establish runtime acceptance.
+UX01–UX07 implementation is complete; user acceptance remains pending. No device
+observations have been supplied to tune the initial timings or reserved-page
+spacing. Use the [final UX manual guide](ux-improvement-plan.md#ux07--october-18-2026--implementation-complete)
+for the complete homepage journey and remaining acceptance observations.
 
 ## Releases and routes
 

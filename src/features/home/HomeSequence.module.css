@@ -1,0 +1,10 @@
+.sequence {
+  --home-viewport: 100vh;
+  min-block-size: var(--home-viewport);
+}
+
+@supports (height: 100dvh) {
+  .sequence {
+    --home-viewport: 100dvh;
+  }
+}

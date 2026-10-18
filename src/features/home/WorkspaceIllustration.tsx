@@ -6,7 +6,11 @@ import styles from './WorkspaceIllustration.module.css'
 export default function WorkspaceIllustration() {
   const captionId = useId()
   return (
-    <figure className={styles['workspace-figure']} aria-labelledby={captionId}>
+    <figure
+      className={styles['workspace-figure']}
+      aria-labelledby={captionId}
+      data-entry-part="illustration"
+    >
       <div className={styles['workspace-scene']}>
         <Paper className={styles['workspace-window']}>
           <div className={styles['workspace-titlebar']}>
@@ -15,7 +19,7 @@ export default function WorkspaceIllustration() {
               <span />
               <span />
             </span>
-            <p>{exampleProject.title}</p>
+            <p id={captionId}>{exampleProject.title}</p>
             <div className={styles['workspace-modes']} aria-hidden="true">
               <span>Plan</span>
               <span className={styles['current-mode']}>Write</span>

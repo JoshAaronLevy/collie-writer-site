@@ -1,7 +1,4 @@
 .home-hero {
-  width: min(var(--page-width), calc(100% - var(--page-gutter) * 2));
-  margin-inline: auto;
-  padding-block: clamp(3rem, 6vw, 5.5rem) clamp(4rem, 7vw, 7rem);
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   align-items: center;

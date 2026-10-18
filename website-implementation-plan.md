@@ -4,6 +4,8 @@ Prepared October 15, 2026. **WEB01–WEB04 implementation complete — awaiting 
 
 **October 16 AI revision:** the revised desktop-root `website-creative-brief.md` and Josh's explicit WAI requests supersede the original decision to omit AI from the homepage. **WAI01–WAI05 are implementation complete — awaiting user testing**; format, lint and typecheck passed without warnings or errors. The consolidated WAI05 guide below covers the final story, supporting content and user-owned metadata/social review. Customer AI, release, commerce and publication prerequisites remain unresolved. The earlier WEB implementation/acceptance records remain historical and unchanged.
 
+**October 18 UX revision:** [ux-improvement-plan.md](ux-improvement-plan.md) owns the subsequent homepage presentation work. UX01–UX07 implementation is complete — awaiting user testing. The six-section sequence, once-per-visit entry, optional gentle settling, layered detail reveals and 2/2/3-page Research/Structure/Review browsing supersede the earlier static/decorative-only motion and long feature-disclosure descriptions. Ownership remains one detail view; FAQ remains a native disclosure. The UX07 record provides the integrated manual guide and final code-check evidence. Earlier WEB/WAI records remain historical, and WEB08, product/provider, commerce, release and publication gates are unchanged.
+
 This plan turns the supplied creative brief into eight independently requestable stages. “Implement stage WEB01” authorizes that stage's local website work and required code checks. Stop at its handoff for Josh's observations. It does not authorize the next stage, changes to the desktop repository, service deployment, publication, or live commerce.
 
 ## 1. Starting point and decisions

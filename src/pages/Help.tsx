@@ -50,9 +50,9 @@ export default function Help() {
           AI and your ChatGPT account
         </h2>
         <p>
-          The connection happens in the desktop app: sign in
-          through OpenAI, then allow eligible ChatGPT plan use. No API keys or
-          separate Collie token bill. Collie pricing is separate.
+          The connection happens in the desktop app: sign in through OpenAI,
+          then allow eligible ChatGPT plan use. No API keys or separate Collie
+          token bill. Collie pricing is separate.
         </p>
         <p>
           In participating apps, plan use counts toward your existing allowance.

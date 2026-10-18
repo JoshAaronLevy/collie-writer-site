@@ -1,0 +1,295 @@
+.section {
+  --section-surface: var(--color-paper);
+  --entry-opacity: 0;
+  --entry-art-from: translateX(18px);
+  background: var(--section-surface);
+  color: var(--color-ink);
+  scroll-margin-block-start: 0;
+}
+
+/* Only the ready controller can arm Waiting. Content remains in the accessibility
+   tree and focus order; focus and navigation immediately settle the whole section. */
+@media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+  .section[data-entry-state='waiting']:not(:focus-within) [data-entry-part] {
+    opacity: 0;
+  }
+
+  .section[data-entry-state='entering']:not(:focus-within) [data-entry-part] {
+    animation: entry-rise 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .section[data-entry-state='entering']:not(:focus-within)
+    [data-entry-part='subtitle'] {
+    --entry-rise: 12px;
+    animation-duration: 360ms;
+    animation-delay: 60ms;
+  }
+
+  .section[data-entry-state='entering']:not(:focus-within)
+    [data-entry-part='illustration'] {
+    animation-name: entry-illustration;
+    animation-duration: 500ms;
+    animation-delay: 80ms;
+  }
+
+  .section[data-entry-state='entering']:not(:focus-within)
+    [data-entry-part='action'] {
+    --entry-rise: 6px;
+    animation-duration: 300ms;
+    animation-delay: 120ms;
+  }
+
+  .section[data-entry-state='entering']:not(:focus-within) [data-entry-accent] {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: entry-accent 360ms 160ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+.section[data-home-section='hero'] {
+  --entry-art-from: translateY(12px) scale(0.985);
+}
+
+.section[data-entry-fresh-hero='true'] {
+  /* The first hero starts visible and stays visible, including both actions. */
+  --entry-opacity: 1;
+  --entry-rise: 8px;
+}
+
+.section[data-home-section='ai'] {
+  --entry-art-from: translateX(-12px);
+}
+
+.section[data-home-section='structure'] {
+  --entry-art-from: translate(-12px, 8px);
+}
+
+.section[data-home-section='ownership'] {
+  --entry-art-from: translateY(16px);
+}
+
+[data-entry-accent='connect'] {
+  --entry-accent-from: translateX(-10px) scaleX(0.9);
+}
+
+[data-entry-accent='reference'] {
+  --entry-accent-from: translate(10px, 6px);
+}
+
+[data-entry-accent='annotation'] {
+  --entry-accent-from: translateX(14px);
+}
+
+[data-entry-accent='file'] {
+  --entry-accent-from: translateY(-12px);
+}
+
+@keyframes entry-rise {
+  from {
+    opacity: var(--entry-opacity);
+    transform: translateY(var(--entry-rise, 20px));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes entry-illustration {
+  from {
+    opacity: var(--entry-opacity);
+    transform: var(--entry-art-from);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes entry-accent {
+  from {
+    opacity: var(--entry-opacity);
+    transform: var(--entry-accent-from);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.section[data-tone='sage'] {
+  --section-surface: #e7eee4;
+}
+
+.layers {
+  display: grid;
+  /* Clip only horizontal sheet travel, without a nested vertical scroller. */
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+.summary-surface,
+.detail-layer {
+  grid-area: 1 / 1;
+  min-inline-size: 0;
+}
+
+.summary-surface {
+  position: relative;
+  z-index: 1;
+  background: var(--section-surface);
+}
+
+.detail-layer {
+  position: relative;
+  z-index: 0;
+  background: var(--color-surface);
+}
+
+.summary-surface[hidden],
+.detail-layer[hidden] {
+  display: none;
+}
+
+.summary-surface[inert],
+.detail-layer[inert] {
+  pointer-events: none;
+}
+
+.inner.detail-inner {
+  display: block;
+}
+
+.toolbar {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 2;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.75rem 0.5rem;
+  margin: -0.75rem -0.5rem 1.5rem;
+  background: var(--color-surface);
+  border-radius: 0.375rem;
+}
+
+.detail-heading {
+  margin-bottom: 2rem;
+}
+
+.detail-heading h2 {
+  max-width: 20em;
+  font: 400 clamp(2rem, 3vw, 3rem) / 1.15 var(--font-editorial);
+  letter-spacing: -0.035em;
+}
+
+.detail-layer :is([id], a, button, input, select, textarea, [tabindex]) {
+  scroll-margin-block-start: calc(
+    var(--detail-toolbar-height, 6rem) + 0.75rem + env(safe-area-inset-top, 0px)
+  );
+}
+
+.bottom-return {
+  margin-top: 2rem;
+}
+
+.inner {
+  width: min(var(--page-width), calc(100% - var(--page-gutter) * 2));
+  margin-inline: auto;
+  min-block-size: var(--home-viewport, 100vh);
+  padding-block: max(clamp(2rem, 5vw, 4rem), env(safe-area-inset-top))
+    max(clamp(2rem, 5vw, 4rem), env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  overflow-wrap: anywhere;
+}
+
+.section[data-home-section='hero'] .inner {
+  min-block-size: max(
+    0px,
+    calc(var(--home-viewport, 100vh) - var(--home-header-height, 0px))
+  );
+}
+
+.inner > *,
+.overview > * {
+  min-inline-size: 0;
+}
+
+.overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.copy h2 {
+  max-width: 15em;
+  font: 400 clamp(2.25rem, 3.5vw, 3.5rem) / 1.13 var(--font-editorial);
+  letter-spacing: -0.04em;
+}
+
+.kicker {
+  margin-bottom: 1.25rem;
+  color: var(--color-green);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.description {
+  max-width: 34rem;
+  margin-top: 1.25rem;
+  color: var(--color-muted);
+  font-size: 1.0625rem;
+  line-height: 1.8;
+}
+
+.control {
+  width: fit-content;
+  max-width: 100%;
+  min-height: 2.75rem;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--color-green);
+  border-radius: 0.25rem;
+  background: var(--color-green-dark);
+  color: var(--color-surface);
+  font: inherit;
+  cursor: pointer;
+}
+
+.control:hover {
+  background: var(--color-green);
+}
+
+.accessible-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 48em) {
+  .overview {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .control {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+  .toolbar {
+    background: Canvas;
+    border: 1px solid CanvasText;
+  }
+}

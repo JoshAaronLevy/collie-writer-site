@@ -1,32 +1,27 @@
-.shape-content,
-.ownership-content {
-  width: min(var(--page-width), calc(100% - var(--page-gutter) * 2));
-  margin-inline: auto;
-  min-width: 0;
+.outline-page {
+  display: grid;
+  grid-template-columns: minmax(6rem, 0.4fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: 1.5rem;
 }
 
-.story-copy h2,
-.ownership-copy h2 {
-  font: 400 clamp(2.25rem, 3.5vw, 3.5rem) / 1.13 var(--font-editorial);
-  letter-spacing: -0.04em;
-}
-
-.section-kicker {
-  margin-bottom: 1.25rem;
-  color: var(--color-green);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.story-copy > p:not(.section-kicker),
-.ownership-copy > p:not(.section-kicker) {
-  margin-top: 1.25rem;
-  max-width: 32rem;
+.outline-context {
+  margin-top: 1.5rem;
   color: var(--color-muted);
-  font-size: 1.0625rem;
-  line-height: 1.8;
+  font-size: 0.9375rem;
+}
+
+.ownership-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (max-width: 48em) {
+  .ownership-detail {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .plan-figure {
@@ -73,33 +68,9 @@
   font-size: 0.75rem;
 }
 
-.shape-section {
-  padding-block: clamp(3.5rem, 7vw, 6rem);
-  background: #e7eee4;
-}
-
-.shape-heading {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: end;
-  margin-bottom: 3rem;
-}
-
-.shape-description {
-  max-width: 32rem;
-  color: var(--color-muted);
-  font-size: 1.0625rem;
-  line-height: 1.8;
-}
-
-.shape-description p + p {
-  margin-top: 1rem;
-}
-
 .plan-board {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(6rem, 0.4fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 1fr);
   align-items: center;
   gap: 1.5rem;
   padding: clamp(1.25rem, 3vw, 3rem);
@@ -225,31 +196,8 @@
   margin-top: 0.5rem;
 }
 
-.ownership-section {
-  padding-block: clamp(3.5rem, 7vw, 6rem);
-  background: var(--color-green-dark);
-  color: var(--color-surface);
-}
-.ownership-content {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: clamp(2.5rem, 6vw, 6rem);
-  align-items: center;
-}
-.ownership-copy .section-kicker {
-  color: var(--color-sage);
-}
-.ownership-copy > p:not(.section-kicker) {
-  color: #e1e9df;
-}
-.ownership-copy a {
-  color: var(--color-sage);
-}
-.ownership-copy a:focus-visible {
-  outline-color: var(--color-sage);
-}
-
 .project-file {
+  color: var(--color-surface);
   padding: clamp(1.5rem, 3.5vw, 3rem);
   border: 1px solid #5d7d6b;
   border-radius: 0.5rem;
@@ -282,72 +230,9 @@
   color: var(--color-sage);
 }
 
-/* No hidden starting state: unsupported features leave the complete static story.
-   One finite sequence, confined to Shape; no scroll handler or moving text. */
-@media (width > 62em) and (prefers-reduced-motion: no-preference) and (forced-colors: none) {
-  .plan-board[data-settling] .material-card::before {
-    animation: paper-settle 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  .plan-board[data-settling] .material-card[data-kind='source']::before {
-    animation-delay: 80ms;
-  }
-
-  .plan-board[data-settling] .material-card[data-kind='passage']::before {
-    animation-delay: 160ms;
-  }
-
-  .plan-board[data-settling] .assignment-connection > span {
-    animation: connection-settle 640ms 120ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  .plan-board[data-settling]
-    .planned-chapters
-    > li[data-selected='true']::before {
-    animation: chapter-settle 520ms 360ms ease-out both;
-  }
-}
-
-@keyframes paper-settle {
-  from {
-    transform: translate(-8px, 6px) rotate(-1deg);
-  }
-  to {
-    transform: none;
-  }
-}
-
-@keyframes connection-settle {
-  from {
-    transform: translateX(-6px);
-    opacity: 0.45;
-  }
-  to {
-    transform: none;
-    opacity: 1;
-  }
-}
-
-@keyframes chapter-settle {
-  from {
-    transform: scale(1.025);
-    opacity: 0;
-  }
-  to {
-    transform: none;
-    opacity: 1;
-  }
-}
-
 @media (max-width: 62em) {
-  .shape-heading,
-  .ownership-content {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .shape-description {
-    max-width: 38rem;
-  }
-  .plan-board {
+  .plan-board,
+  .outline-page {
     grid-template-columns: minmax(0, 1fr);
     gap: 1rem;
   }
@@ -375,9 +260,6 @@
 }
 
 @media (forced-colors: active) {
-  .ownership-copy a:focus-visible {
-    outline-color: Highlight;
-  }
   .planned-chapters > li[data-selected='true'] {
     border: 2px solid Highlight;
   }

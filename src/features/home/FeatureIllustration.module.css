@@ -1,0 +1,62 @@
+.illustration {
+  display: block;
+  width: min(100%, 28rem);
+  height: auto;
+  margin-inline: auto;
+  color: var(--color-green);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ground {
+  fill: var(--color-green);
+  opacity: 0.08;
+  stroke: none;
+}
+
+.paper {
+  fill: var(--color-surface);
+}
+
+.line {
+  fill: none;
+}
+
+.accent {
+  fill: var(--color-sage);
+}
+
+.lens {
+  fill: var(--color-surface);
+  stroke-width: 4;
+}
+
+.heavy {
+  stroke-width: 10;
+}
+
+.underline {
+  stroke: #916b31;
+}
+
+@media (max-width: 48em) {
+  .illustration {
+    width: min(65%, 18rem);
+  }
+}
+
+@media (forced-colors: active) {
+  .illustration,
+  .underline {
+    color: CanvasText;
+    stroke: CanvasText;
+  }
+  .paper,
+  .accent,
+  .lens {
+    fill: Canvas;
+  }
+}
