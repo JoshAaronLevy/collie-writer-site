@@ -1,6 +1,9 @@
 .section {
   --section-surface: var(--color-paper);
   --entry-opacity: 0;
+  /* Total overview entrance, including stagger. Change this to tune its pace. */
+  --entry-duration: 950ms;
+  --entry-easing: cubic-bezier(0.22, 0.75, 0.3, 1);
   --entry-art-from: translateX(18px);
   background: var(--section-surface);
   color: var(--color-ink);
@@ -15,34 +18,36 @@
   }
 
   .section[data-entry-state='entering']:not(:focus-within) [data-entry-part] {
-    animation: entry-rise 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: entry-rise calc(var(--entry-duration) * 560 / 780)
+      var(--entry-easing) both;
   }
 
   .section[data-entry-state='entering']:not(:focus-within)
     [data-entry-part='subtitle'] {
     --entry-rise: 12px;
-    animation-duration: 360ms;
-    animation-delay: 60ms;
+    animation-duration: calc(var(--entry-duration) * 480 / 780);
+    animation-delay: calc(var(--entry-duration) * 90 / 780);
   }
 
   .section[data-entry-state='entering']:not(:focus-within)
     [data-entry-part='illustration'] {
     animation-name: entry-illustration;
-    animation-duration: 500ms;
-    animation-delay: 80ms;
+    animation-duration: calc(var(--entry-duration) * 660 / 780);
+    animation-delay: calc(var(--entry-duration) * 120 / 780);
   }
 
   .section[data-entry-state='entering']:not(:focus-within)
     [data-entry-part='action'] {
     --entry-rise: 6px;
-    animation-duration: 300ms;
-    animation-delay: 120ms;
+    animation-duration: calc(var(--entry-duration) * 400 / 780);
+    animation-delay: calc(var(--entry-duration) * 180 / 780);
   }
 
   .section[data-entry-state='entering']:not(:focus-within) [data-entry-accent] {
     transform-box: fill-box;
     transform-origin: center;
-    animation: entry-accent 360ms 160ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: entry-accent calc(var(--entry-duration) * 460 / 780)
+      calc(var(--entry-duration) * 220 / 780) var(--entry-easing) both;
   }
 }
 

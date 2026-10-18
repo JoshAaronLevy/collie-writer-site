@@ -329,16 +329,16 @@ The current trigger is **60% of the smaller of the section height and visible vi
 
 Intersection Observer signals visibility changes; a passive document-scroll listener coalesced into one pending animation frame supplies the viewport-relative threshold for tall sections. Oversized sections can animate on first entry while remaining ineligible for automatic vertical settling. See [MDN's Intersection Observer documentation](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
 
-Initial art direction, to be tuned from Josh's observations:
+Current entry timings, adjusted after Josh reported that the original entrances felt rushed:
 
 | Group                           | Proposed movement                                                           | Starting timing                     |
 | ------------------------------- | --------------------------------------------------------------------------- | ----------------------------------- |
-| Feature label and headline      | Short upward arrival, approximately 16–24 px, with opacity                  | About 420 ms, starting immediately  |
-| Subtitle                        | Same direction with a smaller offset                                        | About 360 ms, starting 60 ms later  |
-| Illustration                    | A restrained horizontal arrival or assembly of its existing document shapes | About 500 ms, starting 80 ms later  |
-| Section action or feature links | Small upward arrival and opacity                                            | About 300 ms, starting 120 ms later |
+| Feature label and headline      | Short upward arrival, approximately 16–24 px, with opacity                  | About 682 ms, starting immediately  |
+| Subtitle                        | Same direction with a smaller offset                                        | About 585 ms, starting 110 ms later |
+| Illustration                    | A restrained horizontal arrival or assembly of its existing document shapes | About 804 ms, starting 146 ms later |
+| Section action or feature links | Small upward arrival and opacity                                            | About 487 ms, starting 219 ms later |
 
-The whole entrance should settle in roughly 600 ms. Use a smooth deceleration without bounce, overshoot, letter-by-letter animation, or a long delay before the action appears. Buttons must respond immediately if focused or activated during entry.
+The whole entrance settles in 950 ms, with a 1200 ms completion fallback. `--entry-duration: 950ms` in `FeatureSection.module.css` is the single pacing control: all durations/delays scale proportionally, and the fallback reads it and adds 250 ms. Illustration accents use about 560 ms starting at 268 ms; the shared easing is `cubic-bezier(0.22, 0.75, 0.3, 1)`. Use a smooth deceleration without bounce, overshoot, letter-by-letter animation, or a long delay before the action appears. Buttons must respond immediately if focused or activated during entry.
 
 Give each section a related illustration gesture: the hero workspace settles into place, the ChatGPT introduction connects account/workspace shapes, references connect in Research, material aligns into an outline in Structure, a margin annotation resolves in Review, and document forms gather around the project file in Ownership. Keep title/copy behavior consistent. Animate a small number of transform/opacity layers, not every word or every card independently.
 
@@ -902,3 +902,29 @@ Append a compact dated record per requested stage: approved decisions, changed p
 5. Enable reduced motion or forced colors, or use keyboard/direct feature/source links. Expect immediate readable content, usable focus and correct destinations. These accessibility/navigation overrides should affect the encountered section without consuming unrelated unseen sections.
 
 **Status:** correction implemented — awaiting user testing. Josh's original observation is recorded; acceptance of this correction has not yet been supplied.
+
+### Post-UX07 — Calmer overview entrances
+
+**User observation:** Josh reported the independent section entrances were much better, but their speed felt rushed. He requested a modest slowdown for a sleek, elegant arrival. This confirms improvement in the preceding correction, not full-site acceptance.
+
+**Change:** overview entry now takes up to 780ms instead of 580ms, with softer initial acceleration and a little more separation between element starts. Headline: 560ms; subtitle: 480ms after 90ms; illustration: 660ms after 120ms; action: 400ms after 180ms; illustration accent: 460ms after 220ms. The completion fallback increases to 1000ms so it cannot truncate the longer entrance. Updated the current timing guidance and README. Once-per-document entry, direct interaction overrides, reduced-motion behavior, detail reveals, carousel changes and vertical settling retain their existing behavior.
+
+**Checks:** `npm run format`, `npm run lint` and `npm run typecheck` completed cleanly, with no lint warnings. No automated tests or runtime/browser verification were performed.
+
+**Manual guide:**
+
+1. Reload the local homepage at the top (run `npm run dev` first if needed), then scroll through the overview sections. Expect a softer, slightly longer entrance with a subtle stagger, completing in under a second.
+2. Activate Learn more or keep scrolling while an overview enters. Expect immediate response without needing to wait for the choreography. Revisit the section; expect no repeated entrance until reload.
+3. Enable reduced motion and reload. Expect immediately readable content without entry motion.
+
+**Status:** implementation complete — awaiting Josh's timing/feel review.
+
+### Post-UX07 — Explicit 950ms entry duration
+
+Josh requested 950ms and noted that 780ms was not directly findable in the source. The previous total was the illustration's 120ms delay plus its 660ms duration. `FeatureSection.module.css` now exposes `--entry-duration: 950ms` near the top; every overview element scales its existing duration/delay from that one value. Softer easing is retained. The completion fallback reads the CSS value (literal ms or s) and adds 250ms, avoiding premature completion after future tuning. Current timing guidance and README identify this control; historical timing records remain unchanged.
+
+**Checks:** `npm run format`, `npm run lint` and `npm run typecheck` completed cleanly, with no lint warnings. No automated tests or runtime/browser verification were performed.
+
+**Manual guide:** reload the local homepage (run `npm run dev` if needed) and scroll into an unvisited section; expect the full overview entrance to last about 0.95 seconds. Revisit it; expect no replay until reload. Activate Learn more during entry; expect immediate response.
+
+**Status:** implementation complete — awaiting user timing review.

@@ -128,7 +128,10 @@ About 60% of the smaller of the section height and visible viewport starts entry
 Tall sections can therefore animate without needing 60% of their entire height on
 screen. Intersection observation and a passive document-scroll listener schedule
 at most one pending frame; there is no idle animation loop. The nominal entrance
-lasts 580ms, with an 800ms completion fallback. A fresh hero uses the existing
+lasts 950ms, controlled by `--entry-duration` in `FeatureSection.module.css`. All
+group durations/delays scale together; the completion fallback reads that value
+and adds 250ms of slack (1200ms total at the current setting). Softer easing and staggered
+starts give the overview a more measured arrival. A fresh hero uses the existing
 fully opaque entrance. Entry changes transforms/opacity without scrolling or
 moving focus; oversized sections still remain ineligible for vertical settling.
 

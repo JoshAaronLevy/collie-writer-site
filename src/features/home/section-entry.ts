@@ -10,7 +10,7 @@ type SectionEntry = {
 }
 
 const ENTRY_THRESHOLD = 0.6
-const COMPLETION_FALLBACK_MS = 800
+const COMPLETION_SLACK_MS = 250
 // This client-only memory lasts for the loaded document, including SPA remounts.
 // Reloading creates a new set; sessionStorage would incorrectly survive reloads.
 const enteredSections = new Set<string>()
@@ -71,7 +71,19 @@ export function createSectionEntry(sequence: HTMLElement, header: HTMLElement) {
       entry.startFrame = undefined
       enteredSections.add(entry.key)
     })
-    entry.timer = window.setTimeout(() => settle(entry), COMPLETION_FALLBACK_MS)
+    // Follow the CSS duration so changing its single tuning value cannot cause
+    // the safety timer to cut the entrance short. Accept literal ms or s values.
+    const duration = getComputedStyle(entry.element)
+      .getPropertyValue('--entry-duration')
+      .trim()
+    const milliseconds =
+      Number.parseFloat(duration) * (duration.endsWith('ms') ? 1 : 1000)
+    const durationMs =
+      Number.isFinite(milliseconds) && milliseconds > 0 ? milliseconds : 950
+    entry.timer = window.setTimeout(
+      () => settle(entry),
+      durationMs + COMPLETION_SLACK_MS,
+    )
   }
 
   function update(animate = true) {
