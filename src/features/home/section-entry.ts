@@ -1,27 +1,28 @@
 import { readHomeViewport, readSectionGeometry } from './section-geometry'
 
 type EntryState = 'waiting' | 'entering' | 'summary'
-
 type SectionEntry = {
   element: HTMLElement
+  key: string
   state: EntryState
-  seen: boolean
   timer?: number
+  startFrame?: number
 }
 
 const ENTRY_THRESHOLD = 0.6
-// Longest CSS entrance is 580ms; completion must not depend on animation events.
 const COMPLETION_FALLBACK_MS = 800
+// This client-only memory lasts for the loaded document, including SPA remounts.
+// Reloading creates a new set; sessionStorage would incorrectly survive reloads.
+const enteredSections = new Set<string>()
 
-/** One visit-scoped controller. It never scrolls, changes focus, or hides DOM nodes. */
+/** Independent entry states. No scrolling, focus moves or cross-section completion. */
 export function createSectionEntry(sequence: HTMLElement, header: HTMLElement) {
   const sections: SectionEntry[] = Array.from(
     sequence.querySelectorAll<HTMLElement>('[data-home-section]'),
-    (element) => ({ element, state: 'summary', seen: false }),
+    (element) => ({ element, key: element.id, state: 'waiting' }),
   )
   if (
     typeof IntersectionObserver === 'undefined' ||
-    typeof ResizeObserver === 'undefined' ||
     typeof window.matchMedia !== 'function'
   )
     return () => {}
@@ -29,159 +30,194 @@ export function createSectionEntry(sequence: HTMLElement, header: HTMLElement) {
   const motion = window.matchMedia(
     '(prefers-reduced-motion: no-preference) and (forced-colors: none)',
   )
-  if (!motion.matches || typeof motion.addEventListener !== 'function')
-    return () => {}
+  if (typeof motion.addEventListener !== 'function') return () => {}
 
   let disposed = false
+  let updateFrame = 0
   let intersection: IntersectionObserver | undefined
   let resize: ResizeObserver | undefined
 
-  function settle(entry: SectionEntry) {
+  function settle(entry: SectionEntry, remember = true) {
     window.clearTimeout(entry.timer)
-    entry.timer = undefined
+    if (entry.startFrame !== undefined) cancelAnimationFrame(entry.startFrame)
+    entry.timer = entry.startFrame = undefined
     entry.state = 'summary'
     entry.element.dataset.entryState = 'summary'
     delete entry.element.dataset.entryFreshHero
+    if (remember) enteredSections.add(entry.key)
   }
 
-  function settleAll() {
-    sections.forEach(settle)
+  function finishActive() {
+    for (const entry of sections) {
+      if (entry.state === 'entering') settle(entry)
+    }
   }
 
-  function geometry(entry: SectionEntry) {
-    return readSectionGeometry(entry.element, readHomeViewport(sequence))
+  function coverage(entry: SectionEntry) {
+    const viewport = readHomeViewport(sequence)
+    const box = readSectionGeometry(entry.element, viewport)
+    // Tall sections can never reach 60% intersection of their entire height.
+    // Entry uses the smaller of section/visible viewport, unlike vertical snapping.
+    const basis = Math.min(box.bottom - box.top, viewport.visibleHeight)
+    return basis > 0 ? box.visible / basis : 0
   }
 
   function enter(entry: SectionEntry, freshHero = false) {
     if (freshHero) entry.element.dataset.entryFreshHero = 'true'
     entry.state = 'entering'
     entry.element.dataset.entryState = 'entering'
+    // Do not consume an entrance during StrictMode's pre-paint setup/cleanup.
+    entry.startFrame = requestAnimationFrame(() => {
+      entry.startFrame = undefined
+      enteredSections.add(entry.key)
+    })
     entry.timer = window.setTimeout(() => settle(entry), COMPLETION_FALLBACK_MS)
   }
 
-  function update() {
-    if (disposed) return
+  function update(animate = true) {
+    if (disposed || document.hidden) return
     try {
       for (const entry of sections) {
         if (entry.state === 'summary') continue
-        const box = geometry(entry)
+        const visible = coverage(entry)
+        if (entry.state === 'entering') {
+          if (!motion.matches || visible < ENTRY_THRESHOLD) settle(entry)
+          continue
+        }
+        if (visible < ENTRY_THRESHOLD) continue
         if (
-          !box.fits ||
+          !animate ||
           !motion.matches ||
-          document.hidden ||
           (entry.element.dataset.featureState &&
             entry.element.dataset.featureState !== 'summary')
-        ) {
+        )
           settle(entry)
-        } else if (entry.state === 'entering') {
-          if (box.ratio < ENTRY_THRESHOLD) settle(entry)
-        } else if (box.ratio >= ENTRY_THRESHOLD) {
-          enter(entry)
-        } else if (box.bottom <= 0 || (entry.seen && box.ratio === 0)) {
-          settle(entry)
-        } else if (box.ratio > 0) {
-          entry.seen = true
-        }
+        else enter(entry)
       }
     } catch {
-      settleAll()
+      // Readable local fallback; unseen sections are not remembered as visited.
+      sections.forEach((entry) => settle(entry, entry.state === 'entering'))
     }
   }
 
-  function revealTarget(target: EventTarget | null) {
-    if (!(target instanceof Element)) return
-    const entry = sections.find(({ element }) => element.contains(target))
-    if (entry) settle(entry)
+  function scheduleUpdate() {
+    if (disposed || updateFrame) return
+    updateFrame = requestAnimationFrame(() => {
+      updateFrame = 0
+      update()
+    })
+  }
+
+  function entryFor(target: EventTarget | null) {
+    return target instanceof Element
+      ? sections.find(({ element }) => element.contains(target))
+      : undefined
   }
 
   function onInteraction(event: Event) {
-    revealTarget(event.target)
+    const entry = entryFor(event.target)
+    if (entry) settle(entry)
+  }
+
+  function onControlInteraction(event: Event) {
+    // Starting a touch scroll on a pending section is not a request to skip it.
+    if (
+      event.target instanceof Element &&
+      event.target.closest(
+        'a, button, summary, input, textarea, select, [contenteditable]:not([contenteditable="false"])',
+      )
+    )
+      onInteraction(event)
   }
 
   function onAnimationEnd(event: AnimationEvent) {
-    // The illustration is the last group to finish (80 + 500ms).
+    const entry = entryFor(event.target)
     if (
+      entry?.state === 'entering' &&
       event.target instanceof Element &&
       event.target.getAttribute('data-entry-part') === 'illustration'
-    ) {
-      revealTarget(event.target)
-    }
+    )
+      settle(entry)
+  }
+
+  function onAnimationCancel(event: Event) {
+    const entry = entryFor(event.target)
+    if (entry?.state === 'entering') settle(entry)
   }
 
   function onPreferenceChange() {
-    // A settled/fallback visit never re-arms when the preference changes back.
-    if (!motion.matches) settleAll()
+    if (!motion.matches) finishActive()
+    update()
   }
 
   function onVisibilityChange() {
-    if (document.hidden) settleAll()
+    if (document.hidden) finishActive()
+    else scheduleUpdate()
   }
 
   function onPageShow(event: PageTransitionEvent) {
-    if (event.persisted || window.scrollY > 0) settleAll()
-    else update()
+    if (event.persisted) {
+      finishActive()
+      update(false)
+    } else scheduleUpdate()
   }
 
   function onResize() {
-    // Geometry changes stop active movement; oversized or newly visible waiting
-    // content takes the static path. Resizing alone must not start an entrance.
-    for (const entry of sections) {
-      if (entry.state === 'summary') continue
-      const box = geometry(entry)
-      if (entry.state === 'entering' || !box.fits || box.ratio > 0)
-        settle(entry)
-    }
+    finishActive()
+    scheduleUpdate()
   }
 
   function cleanup() {
     disposed = true
-    settleAll()
+    cancelAnimationFrame(updateFrame)
+    sections.forEach((entry) => settle(entry, false))
     intersection?.disconnect()
     resize?.disconnect()
     motion.removeEventListener('change', onPreferenceChange)
+    document.removeEventListener('scroll', scheduleUpdate)
     document.removeEventListener('visibilitychange', onVisibilityChange)
     window.removeEventListener('pageshow', onPageShow)
-    window.removeEventListener('pagehide', settleAll)
+    window.removeEventListener('pagehide', finishActive)
     window.removeEventListener('resize', onResize)
     window.visualViewport?.removeEventListener('resize', onResize)
     sequence.removeEventListener('focusin', onInteraction)
-    sequence.removeEventListener('pointerdown', onInteraction, true)
-    sequence.removeEventListener('click', onInteraction, true)
-    sequence.removeEventListener('toggle', onInteraction, true)
+    sequence.removeEventListener('pointerdown', onControlInteraction, true)
+    sequence.removeEventListener('click', onControlInteraction, true)
     sequence.removeEventListener('animationend', onAnimationEnd)
-    sequence.removeEventListener('animationcancel', onInteraction)
+    sequence.removeEventListener('animationcancel', onAnimationCancel)
     sequence.removeEventListener('home:reveal-entry', onInteraction)
     sequence.removeEventListener('home:feature-change', onInteraction)
   }
 
   try {
-    intersection = new IntersectionObserver(update, {
+    intersection = new IntersectionObserver(scheduleUpdate, {
       threshold: [0, 0.01, ENTRY_THRESHOLD, 1],
     })
-    // Initial ResizeObserver delivery is not a geometry change.
-    const sizes = new WeakMap<Element, string>()
-    resize = new ResizeObserver((entries) => {
-      let changed = false
-      for (const entry of entries) {
-        const size = `${entry.contentRect.width}:${entry.contentRect.height}`
-        const previous = sizes.get(entry.target)
-        if (previous !== undefined && previous !== size) changed = true
-        sizes.set(entry.target, size)
-      }
-      if (changed) onResize()
-    })
+    if (typeof ResizeObserver !== 'undefined') {
+      const sizes = new WeakMap<Element, string>()
+      resize = new ResizeObserver((entries) => {
+        let changed = false
+        for (const entry of entries) {
+          const size = `${entry.contentRect.width}:${entry.contentRect.height}`
+          const previous = sizes.get(entry.target)
+          if (previous !== undefined && previous !== size) changed = true
+          sizes.set(entry.target, size)
+        }
+        if (changed) onResize()
+      })
+    }
     motion.addEventListener('change', onPreferenceChange)
+    document.addEventListener('scroll', scheduleUpdate, { passive: true })
     document.addEventListener('visibilitychange', onVisibilityChange)
     window.addEventListener('pageshow', onPageShow)
-    window.addEventListener('pagehide', settleAll)
+    window.addEventListener('pagehide', finishActive)
     window.addEventListener('resize', onResize)
     window.visualViewport?.addEventListener('resize', onResize)
     sequence.addEventListener('focusin', onInteraction)
-    sequence.addEventListener('pointerdown', onInteraction, true)
-    sequence.addEventListener('click', onInteraction, true)
-    sequence.addEventListener('toggle', onInteraction, true)
+    sequence.addEventListener('pointerdown', onControlInteraction, true)
+    sequence.addEventListener('click', onControlInteraction, true)
     sequence.addEventListener('animationend', onAnimationEnd)
-    sequence.addEventListener('animationcancel', onInteraction)
+    sequence.addEventListener('animationcancel', onAnimationCancel)
     sequence.addEventListener('home:reveal-entry', onInteraction)
     sequence.addEventListener('home:feature-change', onInteraction)
 
@@ -189,42 +225,38 @@ export function createSectionEntry(sequence: HTMLElement, header: HTMLElement) {
       | PerformanceNavigationTiming
       | undefined
     const restoring = navigation?.type === 'back_forward' || window.scrollY > 0
-    const hasFragment = Boolean(window.location.hash)
     let fragmentTarget: HTMLElement | null = null
     try {
       fragmentTarget = document.getElementById(
         decodeURIComponent(window.location.hash.slice(1)),
       )
     } catch {
-      // A malformed fragment has no destination; keep the mounted content usable.
+      // Malformed fragments have no target; all content stays usable.
     }
     for (const entry of sections) {
       intersection.observe(entry.element)
-      resize.observe(entry.element)
-      const box = geometry(entry)
+      resize?.observe(entry.element)
       if (
-        !box.fits ||
-        document.hidden ||
-        restoring ||
+        enteredSections.has(entry.key) ||
         entry.element.contains(fragmentTarget) ||
         entry.element.contains(document.activeElement)
       ) {
         settle(entry)
-      } else if (box.ratio > 0) {
-        if (
-          entry.element.dataset.homeSection === 'hero' &&
-          window.scrollY === 0 &&
-          !hasFragment
-        )
-          enter(entry, true)
-        else settle(entry)
+      } else if (!document.hidden && coverage(entry) >= ENTRY_THRESHOLD) {
+        if (restoring || !motion.matches) settle(entry)
+        else
+          enter(
+            entry,
+            entry.element.dataset.homeSection === 'hero' &&
+              window.scrollY === 0 &&
+              !window.location.hash,
+          )
       } else {
-        entry.state = 'waiting'
         entry.element.dataset.entryState = 'waiting'
       }
     }
-    resize.observe(header)
-    resize.observe(sequence)
+    resize?.observe(header)
+    resize?.observe(sequence)
   } catch {
     cleanup()
   }

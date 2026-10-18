@@ -7,7 +7,7 @@ Prepared October 18, 2026; updated from Josh's recorded decisions. **UX01 docume
 - Include **Hero → ChatGPT introduction → Research → Structure → Review → Ownership/files** in the full-height experience. Pricing, FAQ, the footer, and supporting pages retain natural height.
 - Keep full-height presentations on phones where the content fits. Allow natural height when available space, enlarged text, or zoom requires it; useful detail carousels remain horizontal, with ordinary vertical page scrolling for tall content.
 - Retain the scrolling, non-sticky header and the introduction's direct feature links; add ownership to those links. Do not add a persistent feature menu or dot rail.
-- Play entry animation once per section per homepage visit. Returning to a section shows its settled content immediately.
+- Play entry animation independently once per section per loaded document. Returning to a section shows its settled content immediately; a full reload resets entry memory. Hiding the tab, resizing or visiting another section must not consume unseen entrances. This reflects Josh’s post-UX07 correction.
 - Preserve an open detail view and its selected slide while visitors browse the homepage. Explicit **Back to overview** closes it; leaving the homepage ends this temporary state. Closing retains the selected slide for reopening during the same visit.
 - **Keep the existing copy.** Reorganize it into summaries and details without rewriting headlines, shortening sentences, or deleting explanations. Josh will judge wording after the new experience is implemented. New functional labels needed for the requested controls are permitted; a marketing-copy revision is deferred.
 
@@ -325,9 +325,9 @@ Prefer a small explicit presentation state plus `hasEntered` and selected slide 
 
 ### 4.3 Entry choreography
 
-The proposed trigger is **60% of a viewport-fitting section visible**. This starts the presentation; it does not move the page. A section can become Summary at 60% visibility without ever becoming eligible to snap.
+The current trigger is **60% of the smaller of the section height and visible viewport**. This starts the presentation; it does not move the page. A section can become Summary at 60% visibility without ever becoming eligible to snap.
 
-For ordinary feature geometry, Intersection Observer can signal that threshold. Its ratio is relative to the observed target; a section taller than the viewport may never reach 60%. Oversized sections therefore take the visible static path rather than waiting for an unreachable threshold. See [MDN's Intersection Observer documentation](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
+Intersection Observer signals visibility changes; a passive document-scroll listener coalesced into one pending animation frame supplies the viewport-relative threshold for tall sections. Oversized sections can animate on first entry while remaining ineligible for automatic vertical settling. See [MDN's Intersection Observer documentation](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
 
 Initial art direction, to be tuned from Josh's observations:
 
@@ -342,9 +342,9 @@ The whole entrance should settle in roughly 600 ms. Use a smooth deceleration wi
 
 Give each section a related illustration gesture: the hero workspace settles into place, the ChatGPT introduction connects account/workspace shapes, references connect in Research, material aligns into an outline in Structure, a margin annotation resolves in Review, and document forms gather around the project file in Ownership. Keep title/copy behavior consistent. Animate a small number of transform/opacity layers, not every word or every card independently.
 
-Entry plays once per section per homepage visit, including the hero and ChatGPT introduction. Returning up the page does not erase content and start over. Leaving during entry resolves to a readable settled state. There is no continuous animation after entry and no animation tied to every pixel of scrolling.
+Entry plays independently once per section per loaded document, including the hero and ChatGPT introduction. Reloading resets the in-memory entry record; homepage remounts within the same document retain it. Offscreen pending sections stay pending through other sections’ transitions, resize and tab visibility changes. Returning up the page does not erase content and start over. Leaving during entry resolves to a readable settled state. There is no continuous animation after entry and no animation tied to every pixel of scrolling.
 
-On a fresh top-of-home load, the hero may start its one short entrance immediately when the enhancement is ready; do not first hide a visibly rendered hero or wait for a scroll threshold. Its CTA and the header remain usable. If that entrance cannot start without a hide/reveal flash, show the settled hero and count it as entered. Fragment/history restoration uses the settled path, and a hero encountered later after a deep initial link follows the same once-per-visit rule.
+On a fresh top-of-home load, the hero may start its one short entrance immediately when the enhancement is ready; do not first hide a visibly rendered hero or wait for a scroll threshold. Its CTA and the header remain usable. If that entrance cannot start without a hide/reveal flash, show the settled hero and count it as entered. Fragment/history restoration uses the settled path, and a hero encountered later after a deep initial link follows the same once-per-document rule.
 
 Do not hide content before the controller is ready. The normal mounted presentation is readable; arm the visual Waiting treatment only for eligible offscreen sections. Focus entering a visually waiting summary reveals it immediately. Initial fragment destinations, restored viewport content, reduced-motion/forced-color presentations, missing observer support, and interruption/error cleanup must all reach a complete readable state without waiting for an animation event.
 
@@ -882,3 +882,23 @@ Append a compact dated record per requested stage: approved decisions, changed p
 7. Directly load feature fragments and `#research-source`, `#structure-outline`, `#review-source`, `#review-repetition`; expect the appropriate presentation/page and target. Repeat a link and use Back/Forward; expect useful destinations and browser restoration. Visit Help and Downloads, then return without a detail fragment; expect normal supporting routes and fresh homepage state. Finish by navigating to Pricing, FAQ and the footer; expect immediate access without closing every feature or completing the carousels, with development/planned/unavailable labels intact.
 
 **Acceptance:** implementation complete — awaiting user testing. UX01–UX07 implementation is complete; user-confirmed acceptance is not. Stop here for Josh's observations. No deployment, publication, live purchase activation or desktop acceptance is implied.
+
+### Post-UX07 — Independent first-entry correction
+
+**User observation:** Josh saw entry animation in the first feature section but not subsequent sections. He clarified that each section must own its state and animate on first encounter, then remain settled until the site is reloaded. This supersedes earlier homepage-mount-only entry lifetime and oversized-entry exclusions; detail/page retention and vertical-settling rules remain separate.
+
+**Source findings:** the entry controller globally settled pending sections on tab hiding/page restoration, excluded oversized sections entirely, and consumed partial visits or touch starts on plain section content. Resize could also settle pending sections before their entrance. These paths explain how later sections could lose eligibility; no browser reproduction was performed.
+
+**Correction:** `section-entry.ts` now owns independent Waiting/Entering/Summary records and a document-lifetime set of encountered section IDs. Offscreen/partially encountered sections retain Waiting through visibility, resize and restoration; only a running entrance or explicitly encountered destination is settled. Plain-content touch starts no longer consume an entrance. A 60% viewport-relative trigger also works for tall sections, using passive scroll observation coalesced to one pending frame. Started entrances remain settled after interruption; completed entrances do not replay. Cleanup preserves unseen eligibility and avoids consuming the fresh hero during React's pre-paint effect replay. Reload clears the memory; no storage service is used. Reduced motion, forced colors and explicit focus/navigation retain immediate readable paths. README and current entry guidance were updated; earlier stage records remain historical.
+
+**Checks:** `npm run format`, `npm run lint` and `npm run typecheck` completed cleanly; lint reported no errors or warnings. No automated tests, app/dev-server launches, browser automation, screenshots or runtime probes were added or run.
+
+**Manual guide for Josh:**
+
+1. Reload the homepage at the top with reduced motion off, then scroll through Hero, ChatGPT introduction, Research, Structure, Review and Ownership. Expect each section's own entrance as it reaches the visibility threshold, regardless of which earlier sections have finished.
+2. Scroll back and revisit them, including opening/closing details. Expect settled summaries with no repeated entry animation. Reload at the top and repeat; expect entrances to be available again.
+3. Reload, visit only the first sections, switch tabs and return, then continue down. Expect every still-unvisited section to animate. Repeat after resizing and with a short viewport where a section is taller than the screen; expect unvisited sections to remain eligible, with ordinary scrolling through tall content.
+4. Partly reveal a section below the trigger, scroll away, then return farther into it. Expect its entrance still to be available. Starting a touch scroll on plain section content should not consume it.
+5. Enable reduced motion or forced colors, or use keyboard/direct feature/source links. Expect immediate readable content, usable focus and correct destinations. These accessibility/navigation overrides should affect the encountered section without consuming unrelated unseen sections.
+
+**Status:** correction implemented — awaiting user testing. Josh's original observation is recorded; acceptance of this correction has not yet been supplied.

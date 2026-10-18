@@ -118,22 +118,28 @@ a delayed hash event cannot restart an interrupted alignment. Back/Forward leave
 scroll restoration to the browser.
 Pricing/FAQ and supporting routes retain their existing navigation behavior.
 
-UX03 adds once-per-visit entry choreography through `section-entry.ts` and the
-shared section CSS. Only ready, offscreen, viewport-fitting summaries wait for
-entry; about 60% visibility starts the coordinated headline, copy, illustration,
-and action groups. The nominal sequence lasts 580ms, with an 800ms completion
-fallback. A fresh fitting hero uses a short, fully opaque entrance so its text,
-actions and header never disappear. Entry only changes transforms and opacity;
-it does not scroll the page or change focus.
+Entry choreography in `section-entry.ts` gives each section its own Waiting →
+Entering → Summary state. Each entrance runs once per loaded document, including
+across SPA remounts; reloading resets that memory. Unseen sections keep waiting
+when another section finishes, the tab is hidden, the page is restored or geometry
+changes. A partial visit below the trigger does not consume the entrance.
 
-Focus, pointer/keyboard activation and deliberate fragment navigation immediately
-settle the relevant section. Departures, geometry changes, opened details and
-animation cancellation also resolve to readable content. Reduced motion, forced
-colors, oversized sections, restored visits and missing enhancement APIs use the
-static path. Preference changes or a hidden tab settle the visit, and reversing a
-preference does not re-arm it. Observers, listeners and completion timers are
-released on homepage unmount. CSS itself keeps content visible for reduced motion,
-forced colors and focused sections.
+About 60% of the smaller of the section height and visible viewport starts entry.
+Tall sections can therefore animate without needing 60% of their entire height on
+screen. Intersection observation and a passive document-scroll listener schedule
+at most one pending frame; there is no idle animation loop. The nominal entrance
+lasts 580ms, with an 800ms completion fallback. A fresh hero uses the existing
+fully opaque entrance. Entry changes transforms/opacity without scrolling or
+moving focus; oversized sections still remain ineligible for vertical settling.
+
+Explicit focus/control activation and fragment navigation immediately settle only
+the relevant section. A running entrance can finish early on departure, resize,
+visibility or preference change; this does not consume unseen sections. Reduced
+motion and forced colors show readable content and mark only encountered sections
+as settled. Restoration settles visible destinations while leaving other first
+visits eligible. Unsupported enhancement APIs use readable static content. Cleanup
+releases listeners, observers, timers and pending frames without recording unseen
+sections or consuming an entrance during React's pre-paint effect cleanup.
 
 UX04 adds optional near-boundary settling through `section-settling.ts`, using
 `section-geometry.ts` for the same viewport and header-plus-hero measurements as
